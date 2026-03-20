@@ -1,0 +1,4039 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Isabella &amp; Nathaniel — The Garden Covenant</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Montserrat:wght@300;400;500;600&family=Great+Vibes&family=Pinyon+Script&family=Cinzel:wght@400;500;600&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+/* ══════════════════════════════════════════════════
+   VARIABLES
+══════════════════════════════════════════════════ */
+:root{
+  /* ── Backgrounds ── */
+  --cream:#f7e8d0;         /* antique peach/cream — warm, rich */
+  --parchment:#e8d5b7;     /* deep tan parchment */
+  --paper:#ffffff;         /* pure white cards */
+  --section-sage:rgba(30,72,40,.06);   /* tint for sage sections */
+  --section-rose:rgba(160,40,80,.05);  /* tint for rose sections */
+
+  /* ── Gold — rich sun-gold ── */
+  --gold:#d4af37;          /* bright sun-gold */
+  --gold-lt:#f0cc60;       /* light gold highlight */
+  --gold-pale:#fae88a;     /* pale gold */
+  --gold-foil:#c8980a;     /* deep foil for scratch */
+
+  /* ── Typography ── */
+  --ink:#0d0a05;           /* near-black espresso */
+  --ink-lt:#2a1f10;        /* deep espresso secondary */
+
+  /* ── Florals — saturated ── */
+  --rose:#c41450;          /* magenta-rose */
+  --blush:#f07090;         /* bright coral-pink */
+  --sage:#1e7a40;          /* vivid emerald sage */
+  --sage-dk:#0f4020;       /* deep forest emerald */
+  --lavender:#6040c0;      /* deep violet */
+  --mauve:#a0205a;         /* deep magenta */
+  --coral:#e84820;         /* bright coral */
+  --teal:#0a8878;          /* jewel teal */
+
+  /* ── Borders ── */
+  --border:rgba(212,175,55,.45);  /* rich gold border */
+  --border-strong:rgba(212,175,55,.75);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:auto}
+body{
+  background:var(--cream);
+  font-family:'Montserrat',sans-serif;
+  color:var(--ink);
+  overflow-x:hidden;
+  cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Ccircle cx='10' cy='10' r='4' fill='%23d4af37' opacity='.8'/%3E%3C/svg%3E") 10 10,auto;
+}
+/* paper grain — slightly stronger */
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:1000;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23grain)' opacity='0.045'/%3E%3C/svg%3E");
+}
+
+/* ══════════════════════════════════════════════════
+   THEATRE
+══════════════════════════════════════════════════ */
+#theatre{
+  position:fixed;inset:0;z-index:500;display:flex;
+  perspective:1200px;background:#1a120a;overflow:hidden;
+}
+.gate-panel{
+  position:relative;width:50%;height:100%;overflow:hidden;
+  transform-style:preserve-3d;will-change:transform;
+}
+.gate-panel.left{transform-origin:left center}
+.gate-panel.right{transform-origin:right center}
+.arch-bg{position:absolute;inset:0;width:200%;height:100%;background:var(--parchment)}
+.gate-panel.right .arch-bg{right:0;left:auto;transform:translateX(-50%)}
+.arch-art{position:absolute;top:0;left:0;width:200%;height:100%}
+.gate-panel.right .arch-art{left:-100%}
+#theatre::after{
+  content:'';position:absolute;left:50%;top:0;width:2px;height:100%;
+  background:linear-gradient(to bottom,transparent,rgba(0,0,0,.6) 20%,rgba(0,0,0,.6) 80%,transparent);
+  transform:translateX(-50%);z-index:10;pointer-events:none;
+}
+#open-btn{
+  position:absolute;bottom:12%;left:50%;transform:translateX(-50%);
+  z-index:20;display:flex;flex-direction:column;align-items:center;gap:14px;
+  cursor:pointer;border:none;background:transparent;
+}
+.open-ring{
+  width:88px;height:88px;border-radius:50%;border:1.5px solid var(--gold-lt);
+  display:flex;align-items:center;justify-content:center;position:relative;
+  animation:ringPulse 2.2s ease-in-out infinite;
+  background:rgba(250,246,239,.08);backdrop-filter:blur(4px);
+}
+.open-ring::before{content:'';position:absolute;inset:6px;border-radius:50%;border:1px solid rgba(212,175,106,.4)}
+.open-ring svg{width:28px;height:28px}
+.open-label{font-size:.62rem;letter-spacing:.32em;text-transform:uppercase;color:var(--gold-lt)}
+@keyframes ringPulse{0%,100%{box-shadow:0 0 0 0 rgba(212,175,106,.4)}50%{box-shadow:0 0 0 14px rgba(212,175,106,0)}}
+.theatre-title{
+  position:absolute;top:42%;left:50%;transform:translate(-50%,-50%);
+  z-index:15;text-align:center;pointer-events:none;white-space:nowrap;
+}
+.theatre-title h1{
+  font-family:'Great Vibes',cursive;font-size:clamp(2.8rem,7vw,5.5rem);
+  color:var(--gold-lt);text-shadow:0 2px 20px rgba(0,0,0,.5),0 0 60px rgba(184,146,58,.4);line-height:1.1;
+}
+.theatre-title .amp{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:60%;color:var(--blush)}
+.theatre-title p{font-size:.62rem;letter-spacing:.38em;text-transform:uppercase;color:rgba(240,221,176,.65);margin-top:10px}
+
+/* ══════════════════════════════════════════════════
+   INVITATION PAGE
+══════════════════════════════════════════════════ */
+#invitation{
+  position:relative;min-height:100vh;opacity:0;
+  max-width:860px;margin:0 auto;padding:0 24px;
+}
+#invitation::before{
+  content:'';display:block;height:28px;
+  background:radial-gradient(ellipse 18px 28px at 9px 0,transparent 18px,var(--cream) 18px) -9px 0/18px 100% repeat-x,var(--parchment);
+}
+
+/* corner florals */
+.floral-corner{
+  position:fixed;pointer-events:none;z-index:5;
+  will-change:transform;transform:translateZ(0);
+}
+.floral-corner.tl{top:-20px;left:-20px}
+.floral-corner.tr{top:-20px;right:-20px}
+.floral-corner.bl{bottom:-20px;left:-20px}
+.floral-corner.br{bottom:-20px;right:-20px}
+
+/* ══════════════════════════════════════════════════
+   HERO
+══════════════════════════════════════════════════ */
+.hero-section{padding:80px 20px 60px;text-align:center;position:relative}
+.monogram-ring{
+  width:110px;height:110px;border-radius:50%;
+  border:1px solid var(--border);margin:0 auto 28px;
+  display:flex;align-items:center;justify-content:center;position:relative;
+  background:var(--paper);box-shadow:0 0 0 8px var(--cream),0 0 0 9px var(--border);
+}
+.monogram-ring::before{content:'';position:absolute;inset:8px;border-radius:50%;border:1px solid rgba(184,146,58,.15)}
+.monogram{font-family:'Great Vibes',cursive;font-size:2.6rem;color:var(--gold);line-height:1}
+.hero-eyebrow{font-size:.58rem;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+.hero-names{font-family:'Great Vibes',cursive;font-size:clamp(3.2rem,9vw,5.8rem);color:var(--ink);line-height:1.05;margin-bottom:10px}
+.hero-names .amp{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:55%;color:var(--rose)}
+.hero-tagline{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.1rem,2.5vw,1.4rem);color:var(--ink-lt);letter-spacing:.04em;margin-bottom:40px}
+.gold-rule{display:flex;align-items:center;gap:16px;margin:0 auto 40px;max-width:340px}
+.gold-rule::before,.gold-rule::after{content:'';flex:1;height:1px;background:linear-gradient(to right,transparent,var(--gold-lt),transparent)}
+.gold-rule-diamond{width:8px;height:8px;background:var(--gold-lt);transform:rotate(45deg);flex-shrink:0}
+.details-card{
+  background:var(--paper);border:1px solid var(--border);border-radius:2px;
+  padding:36px 48px;margin:0 auto 60px;max-width:540px;position:relative;
+  box-shadow:0 4px 32px rgba(44,35,24,.06),inset 0 0 40px rgba(240,221,176,.08);
+}
+.details-card::before,.details-card::after{content:'';position:absolute;width:24px;height:24px;border-color:var(--gold-lt);border-style:solid}
+.details-card::before{top:10px;left:10px;border-width:1px 0 0 1px}
+.details-card::after{bottom:10px;right:10px;border-width:0 1px 1px 0}
+.details-row{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center;margin:18px 0}
+.details-row .divider{width:1px;height:40px;background:var(--border);margin:0 auto}
+.detail-block{text-align:center}
+.detail-label{font-size:.54rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:6px}
+.detail-value{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--ink);line-height:1.4}
+.detail-value.large{font-size:1.6rem;font-weight:500}
+.vine-divider{text-align:center;margin:20px auto 40px;opacity:.55}
+
+/* ══════════════════════════════════════════════════
+   SCRIPTURE  — full redesign
+══════════════════════════════════════════════════ */
+.scripture-section{
+  padding:80px 20px 90px;
+  text-align:center;
+  position:relative;
+  /* Parchment tint behind this section */
+  background:linear-gradient(to bottom,var(--cream),var(--parchment) 18%,var(--parchment) 82%,var(--cream));
+}
+
+/* faint watermark cross behind the whole section */
+.scripture-section::before{
+  content:'✝';
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  font-size:clamp(180px,40vw,320px);
+  color:rgba(184,146,58,.045);
+  pointer-events:none;z-index:0;line-height:1;
+  font-family:serif;
+}
+
+.scripture-eyebrow{
+  font-size:.56rem;letter-spacing:.45em;text-transform:uppercase;
+  color:var(--gold);display:block;margin-bottom:10px;position:relative;z-index:1;
+}
+
+.scripture-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.5rem,3.5vw,2.2rem);
+  font-weight:300;color:var(--ink);
+  margin-bottom:48px;position:relative;z-index:1;
+}
+.scripture-title em{color:var(--gold);font-style:italic}
+
+/* Outer parchment card */
+.scripture-card{
+  position:relative;max-width:700px;margin:0 auto;
+  background:var(--paper);
+  box-shadow:0 8px 48px rgba(44,35,24,.09),0 2px 8px rgba(44,35,24,.05);
+}
+
+/* Outer thick border */
+.scripture-card::before{
+  content:'';position:absolute;inset:0;
+  border:1px solid var(--border);pointer-events:none;z-index:2;
+}
+/* Inner thin border */
+.scripture-card::after{
+  content:'';position:absolute;inset:14px;
+  border:1px solid rgba(184,146,58,.16);pointer-events:none;z-index:2;
+}
+
+/* SVG ornamental frame injected inside card */
+.scripture-border-svg{
+  position:absolute;inset:0;width:100%;height:100%;
+  pointer-events:none;z-index:3;overflow:visible;
+}
+
+.scripture-inner{
+  position:relative;z-index:4;
+  padding:52px 60px 48px;
+}
+
+/* Reference badge */
+.scripture-ref{
+  display:inline-flex;align-items:center;gap:10px;
+  margin-bottom:32px;
+}
+.scripture-ref-line{width:32px;height:1px;background:var(--gold-lt)}
+.scripture-ref-text{
+  font-size:.56rem;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);
+  font-family:'Montserrat',sans-serif;
+}
+
+/* Drop cap */
+.scripture-body{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.1rem,2.2vw,1.38rem);
+  font-weight:300;font-style:italic;
+  color:var(--ink);line-height:2;
+  text-align:center;position:relative;
+}
+.drop-cap{
+  float:none;
+  font-family:'Cormorant Garamond',serif;
+  font-size:3.8em;line-height:.75;
+  font-style:normal;font-weight:600;
+  color:var(--gold);
+  display:inline-block;
+  margin-right:.04em;margin-bottom:-.15em;
+  vertical-align:bottom;
+  text-shadow:0 2px 12px rgba(184,146,58,.25);
+}
+
+/* Verse stanzas — each animates in separately */
+.scripture-stanza{
+  opacity:0;transform:translateY(16px);
+  display:block;margin-bottom:1.4em;
+  transition:none; /* GSAP handles this */
+}
+.scripture-stanza:last-of-type{margin-bottom:0}
+
+/* Highlighted key phrases */
+.gold-phrase{
+  color:var(--gold);font-style:normal;font-weight:500;
+  position:relative;display:inline;
+}
+.gold-phrase::after{
+  content:'';
+  position:absolute;left:0;bottom:-.06em;width:100%;height:1px;
+  background:linear-gradient(to right,transparent,rgba(184,146,58,.5),transparent);
+}
+
+/* The keystone verse — "Love never fails" */
+.keystone-verse{
+  display:block;
+  margin-top:36px;padding-top:28px;
+  border-top:1px solid rgba(184,146,58,.2);
+  opacity:0;transform:translateY(12px);
+}
+.keystone-text{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.6rem,3.5vw,2.4rem);
+  font-weight:300;font-style:italic;
+  color:var(--gold);letter-spacing:.05em;
+  animation:keystoneGlow 4s ease-in-out infinite alternate;
+}
+@keyframes keystoneGlow{
+  from{text-shadow:none;color:var(--gold)}
+  to{text-shadow:0 0 22px rgba(184,146,58,.6),0 0 50px rgba(184,146,58,.25);color:var(--gold-lt)}
+}
+.keystone-ref{
+  display:block;margin-top:8px;
+  font-size:.58rem;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--ink-lt);font-family:'Montserrat',sans-serif;font-style:normal;
+}
+
+/* Additional scripture cards below */
+.scripture-extra{
+  display:grid;grid-template-columns:1fr 1fr;gap:24px;
+  max-width:700px;margin:40px auto 0;
+}
+.extra-card{
+  background:var(--paper);border:1px solid var(--border);
+  padding:28px 28px 24px;position:relative;text-align:center;
+  opacity:0;transform:translateY(20px);
+}
+.extra-card::before,.extra-card::after{
+  content:'';position:absolute;width:14px;height:14px;
+  border-color:var(--gold-lt);border-style:solid;
+}
+.extra-card::before{top:6px;left:6px;border-width:1px 0 0 1px}
+.extra-card::after{bottom:6px;right:6px;border-width:0 1px 1px 0}
+.extra-card-ref{
+  font-size:.5rem;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--gold);display:block;margin-bottom:12px;
+}
+.extra-card-text{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(.95rem,1.8vw,1.1rem);
+  font-style:italic;font-weight:300;
+  color:var(--ink);line-height:1.85;
+}
+.extra-card-text .gold-phrase{font-size:1.05em}
+
+/* source attribution */
+.scripture-attribution{
+  margin-top:28px;font-size:.52rem;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--ink-lt);opacity:.7;
+}
+
+/* ══════════════════════════════════════════════════
+   GALLERY  — Responsive Masonry Polaroid Grid
+══════════════════════════════════════════════════ */
+.gallery-section{padding:70px 20px 90px;position:relative}
+.section-heading{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.8rem,4vw,2.6rem);
+  font-weight:400;color:var(--ink);text-align:center;margin-bottom:8px;
+}
+.section-sub{
+  font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--gold);text-align:center;margin-bottom:52px;display:block;
+}
+
+/* Masonry grid replaces absolute scatter on all screens */
+.polaroid-field{
+  columns:4 180px;         /* up to 4 columns, min 180px each */
+  column-gap:24px;
+  max-width:900px;
+  margin:0 auto;
+  /* No more position:relative or minHeight */
+}
+
+.polaroid{
+  break-inside:avoid;       /* never split a card across columns */
+  margin-bottom:24px;
+  display:inline-block;     /* required for column-break-inside */
+  width:100%;
+  background:#fff;
+  padding:12px 12px 44px;
+  box-shadow:0 6px 28px rgba(44,35,24,.13),0 2px 6px rgba(44,35,24,.07);
+  cursor:pointer;
+  transform-style:preserve-3d;
+  will-change:transform;
+  border:1px solid rgba(255,255,255,.8);
+  user-select:none;
+  position:relative;
+  /* Stagger tilt applied inline via JS */
+  transition:box-shadow .35s ease;
+}
+.polaroid:hover{
+  box-shadow:0 22px 50px rgba(44,35,24,.2),0 8px 18px rgba(44,35,24,.1);
+}
+
+.polaroid-photo{
+  width:100%;
+  aspect-ratio:1/1;
+  overflow:hidden;
+  position:relative;
+  background:var(--parchment);
+}
+.polaroid-photo canvas,
+.polaroid-photo img{
+  width:100%!important;height:100%!important;display:block;
+  object-fit:cover;
+  transition:transform .5s ease;
+}
+.polaroid:hover .polaroid-photo canvas,
+.polaroid:hover .polaroid-photo img{transform:scale(1.04)}
+
+.polaroid-caption{
+  position:absolute;bottom:0;left:0;right:0;
+  height:44px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Great Vibes',cursive;font-size:1.15rem;
+  color:var(--ink-lt);padding:0 10px;
+  text-align:center;line-height:1.2;
+}
+
+/* Responsive column counts */
+@media(max-width:780px){
+  .polaroid-field{ columns:3 160px; column-gap:18px; }
+  .polaroid{ padding:10px 10px 40px; margin-bottom:18px; }
+}
+@media(max-width:520px){
+  .polaroid-field{ columns:2 140px; column-gap:14px; }
+  .polaroid{ padding:8px 8px 36px; margin-bottom:14px; }
+  .polaroid-caption{ font-size:.95rem; height:36px; }
+}
+@media(max-width:320px){
+  .polaroid-field{ columns:1; }
+}
+
+/* ══════════════════════════════════════════════════
+   MUSIC PLAYER HUD
+══════════════════════════════════════════════════ */
+#music-hud{
+  position:fixed;
+  bottom:24px;right:24px;
+  z-index:2000;
+  display:flex;align-items:center;gap:12px;
+  background:rgba(253,251,247,.92);
+  border:1px solid var(--border);
+  padding:10px 16px 10px 12px;
+  border-radius:40px;
+  box-shadow:0 4px 24px rgba(44,35,24,.12),0 1px 6px rgba(44,35,24,.06);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  transition:transform .3s ease,opacity .3s ease;
+  cursor:default;
+}
+#music-hud.hidden{
+  transform:translateY(80px);opacity:0;pointer-events:none;
+}
+
+/* Vinyl record animation */
+.music-vinyl{
+  width:36px;height:36px;border-radius:50%;
+  background:
+    radial-gradient(circle at 50% 50%,
+      #3a2818 0%,#3a2818 18%,
+      rgba(60,40,20,.3) 19%,rgba(60,40,20,.3) 21%,
+      #2a1c0e 22%,#2a1c0e 45%,
+      rgba(60,40,20,.3) 46%,rgba(60,40,20,.3) 48%,
+      #2a1c0e 49%,#2a1c0e 78%,
+      rgba(184,146,58,.5) 79%,rgba(184,146,58,.5) 82%,
+      #2a1c0e 83%
+    );
+  box-shadow:0 2px 8px rgba(0,0,0,.25);
+  flex-shrink:0;
+  position:relative;
+  transition:animation-play-state .3s;
+}
+.music-vinyl::after{
+  content:'';
+  position:absolute;top:50%;left:50%;
+  width:8px;height:8px;border-radius:50%;
+  background:var(--gold-lt);
+  transform:translate(-50%,-50%);
+}
+.music-vinyl.spinning{
+  animation:vinylSpin 2.5s linear infinite;
+}
+@keyframes vinylSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+
+/* Track info */
+.music-info{
+  display:flex;flex-direction:column;gap:1px;
+  min-width:0;max-width:160px;
+}
+.music-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:.8rem;font-style:italic;
+  color:var(--ink);white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis;
+}
+.music-artist{
+  font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--ink-lt);
+}
+
+/* Control buttons */
+.music-controls{display:flex;align-items:center;gap:6px}
+.music-btn{
+  width:28px;height:28px;border-radius:50%;
+  background:transparent;border:1px solid var(--border);
+  color:var(--gold);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .2s,color .2s,border-color .2s;
+  flex-shrink:0;
+}
+.music-btn:hover{background:var(--gold);color:#fff;border-color:var(--gold)}
+.music-btn svg{width:12px;height:12px}
+.music-btn.play-pause svg{width:14px;height:14px}
+
+/* Volume slider */
+.music-vol{
+  -webkit-appearance:none;
+  width:60px;height:2px;
+  background:linear-gradient(to right,var(--gold) var(--pct,40%),var(--border) var(--pct,40%));
+  border-radius:1px;outline:none;cursor:pointer;
+}
+.music-vol::-webkit-slider-thumb{
+  -webkit-appearance:none;
+  width:10px;height:10px;border-radius:50%;
+  background:var(--gold);cursor:pointer;
+  box-shadow:0 1px 4px rgba(0,0,0,.2);
+}
+.music-vol::-moz-range-thumb{
+  width:10px;height:10px;border-radius:50%;
+  background:var(--gold);cursor:pointer;border:none;
+}
+
+/* Waveform equaliser bars */
+.music-eq{
+  display:flex;align-items:flex-end;gap:2px;height:14px;
+}
+.music-eq-bar{
+  width:3px;border-radius:1px;
+  background:var(--gold);
+  animation:eqPulse 1s ease-in-out infinite alternate;
+}
+.music-eq-bar:nth-child(1){height:4px;animation-delay:0s}
+.music-eq-bar:nth-child(2){height:10px;animation-delay:.15s}
+.music-eq-bar:nth-child(3){height:7px;animation-delay:.3s}
+.music-eq-bar:nth-child(4){height:12px;animation-delay:.1s}
+.music-eq-bar:nth-child(5){height:5px;animation-delay:.25s}
+@keyframes eqPulse{
+  from{transform:scaleY(1)}
+  to  {transform:scaleY(1.8)}
+}
+.music-eq.paused .music-eq-bar{animation-play-state:paused}
+
+/* Mobile: smaller player */
+@media(max-width:480px){
+  #music-hud{bottom:16px;right:16px;padding:8px 12px 8px 10px;gap:8px}
+  .music-info{display:none}
+  .music-vol{width:44px}
+}
+
+/* ══════════════════════════════════════════════════
+   SCRATCH & BLOOM — Date Reveal  (vibrant rebuild)
+══════════════════════════════════════════════════ */
+.reveal-section{
+  padding:80px 20px 100px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+  /* Rich emerald-to-cream gradient matches vibrant palette */
+  background:linear-gradient(
+    to bottom,
+    var(--cream) 0%,
+    #efe4d0 18%,
+    #e8d9c0 50%,
+    #efe4d0 82%,
+    var(--cream) 100%
+  );
+}
+
+/* Decorative background cross watermark — bolder */
+.reveal-section::before{
+  content:'✝';
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  font-size:clamp(160px,40vw,280px);
+  color:rgba(212,175,55,.05);
+  pointer-events:none;z-index:0;
+  font-family:serif;line-height:1;
+}
+
+/* Confetti canvas — fixed on top of everything */
+#confetti-canvas{
+  position:fixed;inset:0;
+  pointer-events:none;
+  z-index:9000;
+  opacity:1;
+}
+
+.reveal-intro{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:clamp(1rem,2.2vw,1.3rem);
+  color:var(--ink-lt);margin-bottom:48px;display:block;
+  position:relative;z-index:1;
+}
+
+/* ── "We are getting married!" ── */
+#bloom-message{
+  font-family:'Pinyon Script',cursive;
+  font-size:clamp(2.8rem,8vw,4.8rem);
+  line-height:1.15;
+  margin-bottom:24px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:0;
+  min-height:80px;
+  position:relative;
+  z-index:2;
+  overflow:visible;
+  /* Parent is transparent — gradient lives on each .bloom-letter */
+}
+
+/* Each letter carries the rainbow gradient individually so it renders */
+.bloom-letter{
+  display:inline-block;
+  opacity:0;                              /* GSAP animates to 1 */
+  transform:scale(0.4) translateY(22px) rotate(-6deg);
+  transform-origin:bottom center;
+  /* Solid fallback color first */
+  color:#d4af37;
+  /* Rainbow gradient per letter — overrides solid color where supported */
+  background:linear-gradient(
+    135deg,
+    #c41450 0%, #e84820 18%, #d4af37 36%,
+    #22a830 54%, #0a8878 72%, #6040c0 90%
+  );
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 2px 8px rgba(212,175,55,.35));
+  will-change:transform,opacity;
+}
+
+/* Sparkle shimmer on the whole row */
+#bloom-message::after{
+  content:'';
+  position:absolute;inset:0;
+  background:linear-gradient(
+    105deg,
+    transparent 20%,
+    rgba(255,255,255,.35) 46%,
+    rgba(255,255,255,.55) 50%,
+    rgba(255,255,255,.35) 54%,
+    transparent 80%
+  );
+  background-size:300% 100%;
+  animation:sparkleShimmer 1.8s ease-in-out infinite;
+  pointer-events:none;
+  z-index:1;
+}
+@keyframes sparkleShimmer{
+  0%  {background-position:200% 0}
+  100%{background-position:-200% 0}
+}
+
+/* ── Outer wrapper ── */
+.scratch-outer{
+  position:relative;
+  width:min(420px,94vw);
+  margin:0 auto 28px;
+  z-index:2;
+}
+
+/* ── Scratch card wrapper ── */
+.scratch-wrap{
+  position:relative;
+  width:100%;
+  border-radius:8px;
+  overflow:hidden;
+  box-shadow:
+    0 0 0 2px rgba(212,175,55,.6),
+    0 12px 50px rgba(26,21,15,.2),
+    0 4px 12px rgba(212,175,55,.12);
+}
+
+/* ── Revealed content under the foil ── */
+.scratch-under{
+  position:relative;
+  background:var(--paper);
+  padding:40px 32px 36px;
+  display:flex;flex-direction:column;
+  align-items:center;gap:10px;
+  min-height:240px;
+  justify-content:center;
+}
+/* Vivid corner brackets */
+.scratch-under::before,.scratch-under::after{
+  content:'';position:absolute;
+  width:22px;height:22px;
+  border-color:var(--gold);border-style:solid;
+}
+.scratch-under::before{top:10px;left:10px;border-width:2px 0 0 2px}
+.scratch-under::after {bottom:10px;right:10px;border-width:0 2px 2px 0}
+
+/* Inner decorative border */
+.scratch-under-inner-border{
+  position:absolute;inset:18px;
+  border:1px solid rgba(212,175,55,.22);
+  pointer-events:none;
+}
+
+/* Watermark cross — more visible */
+.scratch-under-cross{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  font-size:6rem;color:rgba(212,175,55,.07);
+  font-family:serif;pointer-events:none;line-height:1;
+  user-select:none;
+}
+
+/* Label */
+.scratch-label{
+  font-family:'Cinzel',serif;
+  font-size:.55rem;letter-spacing:.4em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:2px;
+}
+
+/* DATE — brighter sun-gold foil, bigger */
+.scratch-date{
+  font-family:'Cinzel',serif;
+  font-size:clamp(2.2rem,7.5vw,3.4rem);
+  font-weight:600;
+  letter-spacing:.12em;line-height:1;
+  background:linear-gradient(
+    135deg,
+    #5a3a00 0%,
+    #c89010 12%,
+    #ffe060 26%,
+    #b07808 38%,
+    #f0d040 50%,
+    #c89010 62%,
+    #fff090 74%,
+    #d4a820 84%,
+    #8b5e00 100%
+  );
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 3px 12px rgba(212,175,55,.4));
+}
+.scratch-time{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:clamp(.95rem,2.2vw,1.15rem);
+  color:var(--ink-lt);font-weight:400;
+}
+.scratch-location{
+  font-family:'Cinzel',serif;
+  font-size:clamp(.54rem,1.15vw,.68rem);
+  letter-spacing:.2em;text-transform:uppercase;
+  color:var(--ink-lt);opacity:.85;
+}
+
+/* Vine ornament inside card — more vivid */
+.scratch-vine{ margin:8px 0;opacity:.7; }
+
+/* ── Gold foil canvas ── */
+#scratch-canvas{
+  position:absolute;inset:0;
+  touch-action:none;
+  border-radius:8px;
+  cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='36'%3E%3Ccircle cx='18' cy='18' r='13' fill='%23d4af37' opacity='.7'/%3E%3Ccircle cx='18' cy='18' r='6' fill='%23fff' opacity='.6'/%3E%3C/svg%3E") 18 18, pointer;
+}
+
+/* ── Progress bar — taller, more vivid ── */
+.scratch-progress-bar{
+  width:min(420px,94vw);height:4px;
+  background:rgba(212,175,55,.18);
+  margin:16px auto 0;
+  border-radius:2px;overflow:hidden;
+  position:relative;z-index:2;
+}
+.scratch-progress-fill{
+  height:100%;width:0%;
+  background:linear-gradient(to right,#d4af37,#ffe060,#22a830);
+  border-radius:2px;transition:width .15s;
+  box-shadow:0 0 6px rgba(212,175,55,.5);
+}
+
+/* ── Hint text ── */
+.scratch-hint{
+  display:block;margin-top:14px;
+  font-size:.6rem;letter-spacing:.3em;
+  text-transform:uppercase;color:var(--gold);
+  opacity:.75;
+  animation:hintFade 2s ease-in-out infinite alternate;
+  position:relative;z-index:2;
+}
+@keyframes hintFade{from{opacity:.4}to{opacity:.9}}
+
+/* ── Celebration verse ── */
+#reveal-verse{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:clamp(.95rem,2.1vw,1.15rem);
+  color:var(--ink-lt);
+  margin-top:32px;
+  opacity:0;transform:translateY(18px);
+  max-width:400px;margin-left:auto;margin-right:auto;
+  line-height:1.9;
+  padding:22px 28px;
+  background:var(--paper);
+  border:1.5px solid var(--border);
+  position:relative;z-index:2;
+  box-shadow:0 4px 20px rgba(26,21,15,.08);
+}
+#reveal-verse::before,#reveal-verse::after{
+  content:'';position:absolute;width:14px;height:14px;
+  border-color:var(--gold);border-style:solid;
+}
+#reveal-verse::before{top:7px;left:7px;border-width:1.5px 0 0 1.5px}
+#reveal-verse::after {bottom:7px;right:7px;border-width:0 1.5px 1.5px 0}
+
+
+/* ══════════════════════════════════════════════════
+   RSVP
+══════════════════════════════════════════════════ */
+.rsvp-section{padding:60px 20px 80px;text-align:center}
+.rsvp-card{
+  max-width:500px;margin:0 auto;background:var(--paper);
+  border:1px solid var(--border);padding:48px 44px;position:relative;
+}
+.rsvp-card::before,.rsvp-card::after{content:'';position:absolute;width:20px;height:20px;border-color:var(--gold-lt);border-style:solid}
+.rsvp-card::before{top:8px;left:8px;border-width:1px 0 0 1px}
+.rsvp-card::after{bottom:8px;right:8px;border-width:0 1px 1px 0}
+.rsvp-heading{font-family:'Great Vibes',cursive;font-size:2.6rem;color:var(--gold);margin-bottom:6px}
+.rsvp-by{font-size:.56rem;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-lt);margin-bottom:32px;display:block}
+.field-group{margin-bottom:16px;text-align:left}
+.field-group label{display:block;font-size:.56rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.field-group input,.field-group select{
+  width:100%;background:transparent;border:none;border-bottom:1px solid var(--border);
+  padding:8px 0;font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--ink);
+  outline:none;transition:border-color .3s;-webkit-appearance:none;
+}
+.field-group input:focus,.field-group select:focus{border-bottom-color:var(--gold)}
+.field-group select{cursor:pointer;background:var(--paper)}
+.rsvp-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.submit-btn{
+  width:100%;margin-top:28px;padding:14px;background:transparent;
+  border:1px solid var(--gold);color:var(--gold);font-family:'Montserrat',sans-serif;
+  font-size:.65rem;letter-spacing:.32em;text-transform:uppercase;cursor:pointer;
+  position:relative;overflow:hidden;transition:color .3s;
+}
+.submit-btn::before{content:'';position:absolute;inset:0;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .35s ease;z-index:-1}
+.submit-btn:hover{color:#fff}
+.submit-btn:hover::before{transform:scaleX(1)}
+.success-msg{display:none;padding:20px;text-align:center}
+.success-msg .check{font-size:2rem;color:var(--sage);margin-bottom:10px}
+.success-msg h3{font-family:'Great Vibes',cursive;font-size:2rem;color:var(--gold);margin-bottom:8px}
+.success-msg p{font-size:.82rem;color:var(--ink-lt);line-height:1.7}
+
+/* ══════════════════════════════════════════════════
+   FOOTER
+══════════════════════════════════════════════════ */
+.inv-footer{padding:48px 24px 64px;text-align:center;border-top:1px solid var(--border);position:relative;z-index:2}
+.footer-names{font-family:'Great Vibes',cursive;font-size:2.4rem;color:var(--gold);margin-bottom:12px}
+.footer-verse{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.95rem;color:var(--ink-lt);max-width:380px;margin:0 auto;line-height:1.7}
+.footer-cross{margin:24px auto 0;opacity:.3}
+
+/* ══════════════════════════════════════════════════
+   REVEAL UTILITY
+══════════════════════════════════════════════════ */
+.reveal{opacity:0;transform:translateY(28px)}
+
+/* ══════════════════════════════════════════════════
+   EVENT DETAILS — DAY OF GRACE
+══════════════════════════════════════════════════ */
+
+/* Section wrapper — soft sage tint */
+.events-section{
+  padding:90px 20px 100px;
+  position:relative;
+  background:linear-gradient(to bottom,var(--cream),#f0f4ef 15%,#f0f4ef 85%,var(--cream));
+  overflow:hidden;
+}
+
+/* Faint garden-path texture behind the whole section */
+.events-section::before{
+  content:'';
+  position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 600px 300px at 50% 0%,rgba(122,158,126,.07) 0%,transparent 70%),
+    radial-gradient(ellipse 400px 200px at 50% 100%,rgba(122,158,126,.06) 0%,transparent 70%);
+}
+
+/* Section heading */
+.events-eyebrow{
+  font-size:.55rem;letter-spacing:.44em;text-transform:uppercase;
+  color:var(--sage-dk);display:block;text-align:center;margin-bottom:8px;
+}
+.events-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.8rem,4vw,2.6rem);font-weight:400;
+  color:var(--ink);text-align:center;margin-bottom:6px;
+}
+.events-title em{color:var(--gold);font-style:italic}
+.events-subtitle{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:clamp(.9rem,1.8vw,1.05rem);color:var(--ink-lt);
+  text-align:center;margin-bottom:64px;display:block;
+}
+
+/* ─── VINE TIMELINE ─── */
+.timeline-wrap{
+  position:relative;
+  max-width:760px;
+  margin:0 auto 80px;
+  padding:0 20px;
+}
+
+/* The living vine axis — SVG drawn in JS, absolutely positioned */
+#vine-axis{
+  position:absolute;
+  left:50%;
+  top:0;bottom:0;
+  transform:translateX(-50%);
+  width:60px;        /* breathing room for tendrils */
+  pointer-events:none;
+  overflow:visible;
+}
+
+/* Each timeline event row */
+.tl-event{
+  display:grid;
+  grid-template-columns:1fr 60px 1fr;
+  gap:0 0;
+  align-items:center;
+  margin-bottom:64px;
+  position:relative;
+}
+.tl-event:last-child{margin-bottom:0}
+
+/* Left-side events: content on left, icon in centre, empty on right */
+/* Right-side events: empty on left, icon in centre, content on right */
+.tl-content{
+  background:var(--paper);
+  border:1px solid var(--border);
+  padding:24px 26px 22px;
+  position:relative;
+  /* starts hidden for GSAP */
+  opacity:0;
+  box-shadow:0 4px 24px rgba(44,35,24,.07),0 1px 4px rgba(44,35,24,.04);
+}
+/* Corner bracket decorations on each card */
+.tl-content::before,.tl-content::after{
+  content:'';position:absolute;width:12px;height:12px;
+  border-color:var(--gold-lt);border-style:solid;
+}
+.tl-content::before{top:6px;left:6px;border-width:1px 0 0 1px}
+.tl-content::after{bottom:6px;right:6px;border-width:0 1px 1px 0}
+
+/* Left-aligned card (even events: 0, 2) */
+.tl-event.left .tl-content{ grid-column:1; grid-row:1; text-align:right; }
+.tl-event.left .tl-empty  { grid-column:3; grid-row:1; }
+/* Right-aligned card (odd events: 1, 3) */
+.tl-event.right .tl-empty  { grid-column:1; grid-row:1; }
+.tl-event.right .tl-content{ grid-column:3; grid-row:1; text-align:left; }
+
+/* Centre icon column */
+.tl-node{
+  grid-column:2; grid-row:1;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  position:relative;z-index:2;
+}
+/* Floral bloom node */
+.tl-bloom{
+  width:44px;height:44px;
+  background:var(--paper);
+  border:1.5px solid var(--gold);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 0 5px #f0f4ef, 0 0 0 6px rgba(184,146,58,.2);
+  opacity:0;
+  transform:scale(0.5);
+  position:relative;
+  transition:box-shadow .3s;
+}
+.tl-bloom:hover{box-shadow:0 0 0 5px #f0f4ef,0 0 0 6px var(--gold),0 4px 16px rgba(184,146,58,.3)}
+.tl-bloom svg{width:22px;height:22px}
+
+/* Time label */
+.tl-time{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.4rem,2.5vw,1.75rem);
+  font-weight:500;color:var(--gold);
+  letter-spacing:.04em;line-height:1;
+  margin-bottom:4px;
+}
+.tl-ampm{
+  font-size:.52rem;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--gold);opacity:.75;display:block;margin-bottom:10px;
+}
+.tl-event-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1rem,2vw,1.2rem);
+  font-weight:600;color:var(--ink);
+  margin-bottom:6px;letter-spacing:.02em;
+}
+.tl-event-sub{
+  font-size:.7rem;line-height:1.65;color:var(--ink-lt);
+  font-style:normal;letter-spacing:.01em;
+}
+
+/* Connecting line fills — SVG paths animated in JS */
+.vine-path{
+  stroke-dasharray:1000;
+  stroke-dashoffset:1000;
+  transition:none;
+}
+
+/* ─── VENUE CARD ─── */
+.venue-wrap{
+  max-width:760px;margin:0 auto 56px;
+  display:grid;grid-template-columns:1fr 1fr;gap:0;
+  background:var(--paper);
+  border:1px solid var(--border);
+  box-shadow:0 6px 32px rgba(44,35,24,.09);
+  overflow:hidden;
+  opacity:0;transform:translateY(24px);
+}
+
+/* Watercolour map panel */
+.venue-map{
+  position:relative;
+  background:linear-gradient(135deg,#ddeedd 0%,#c8e0c8 35%,#b4d4b8 65%,#c8dcc0 100%);
+  min-height:280px;
+  overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+}
+.venue-map::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 160px 120px at 45% 45%,rgba(255,255,220,.5) 0%,transparent 70%),
+    radial-gradient(ellipse 80px  60px  at 70% 30%,rgba(180,210,180,.6) 0%,transparent 60%);
+}
+
+/* Text panel */
+.venue-info-panel{
+  padding:36px 36px 32px;
+  display:flex;flex-direction:column;justify-content:center;
+  border-left:1px solid var(--border);
+}
+.venue-eyebrow{
+  font-size:.52rem;letter-spacing:.32em;text-transform:uppercase;
+  color:var(--sage-dk);margin-bottom:8px;display:block;
+}
+.venue-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.2rem,2.4vw,1.5rem);
+  font-weight:500;color:var(--ink);margin-bottom:6px;line-height:1.25;
+}
+.venue-address{
+  font-size:.78rem;line-height:1.8;color:var(--ink-lt);
+  margin-bottom:24px;
+}
+.venue-address span{display:block}
+.directions-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  background:transparent;border:1px solid var(--gold);
+  color:var(--gold);
+  font-family:'Montserrat',sans-serif;font-size:.62rem;
+  letter-spacing:.22em;text-transform:uppercase;
+  padding:11px 22px;cursor:pointer;
+  text-decoration:none;
+  transition:background .28s,color .28s,transform .28s,box-shadow .28s;
+  align-self:flex-start;
+}
+.directions-btn:hover{
+  background:var(--gold);color:#fff;
+  transform:translateY(-2px);
+  box-shadow:0 8px 22px rgba(184,146,58,.28);
+}
+.directions-btn svg{width:14px;height:14px;flex-shrink:0}
+
+/* ─── DRESS CODE & NOTES ─── */
+.notes-wrap{
+  max-width:760px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 1fr;gap:20px;
+  opacity:0;transform:translateY(20px);
+}
+
+.note-card{
+  padding:28px 26px 24px;
+  border:1px solid;
+  position:relative;
+}
+/* Sage green card */
+.note-card.sage{
+  background:rgba(122,158,126,.10);
+  border-color:rgba(74,112,80,.3);
+}
+/* Blush pink card */
+.note-card.blush{
+  background:rgba(232,180,188,.12);
+  border-color:rgba(201,106,122,.25);
+}
+.note-card::before,.note-card::after{
+  content:'';position:absolute;width:10px;height:10px;border-style:solid;
+}
+.note-card.sage::before,.note-card.sage::after{border-color:rgba(74,112,80,.5)}
+.note-card.blush::before,.note-card.blush::after{border-color:rgba(201,106,122,.4)}
+.note-card::before{top:5px;left:5px;border-width:1px 0 0 1px}
+.note-card::after{bottom:5px;right:5px;border-width:0 1px 1px 0}
+
+.note-icon{
+  width:36px;height:36px;
+  margin-bottom:14px;
+  display:block;
+}
+.note-label{
+  font-size:.52rem;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--sage-dk);margin-bottom:6px;display:block;
+}
+.note-card.blush .note-label{color:var(--rose)}
+.note-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1rem,2vw,1.18rem);
+  font-weight:500;color:var(--ink);margin-bottom:8px;
+}
+.note-body{
+  font-size:.75rem;line-height:1.75;color:var(--ink-lt);
+}
+
+/* Transport row — full width */
+.transport-row{
+  grid-column:1/-1;
+  display:flex;align-items:flex-start;gap:18px;
+  padding:22px 26px;
+  background:rgba(184,146,58,.06);
+  border:1px solid var(--border);
+  position:relative;
+}
+.transport-row::before,.transport-row::after{
+  content:'';position:absolute;width:10px;height:10px;border-color:var(--gold-lt);border-style:solid;
+}
+.transport-row::before{top:5px;left:5px;border-width:1px 0 0 1px}
+.transport-row::after{bottom:5px;right:5px;border-width:0 1px 1px 0}
+.transport-icon{width:36px;height:36px;flex-shrink:0;margin-top:2px}
+.transport-text{}
+.transport-text .note-label{margin-bottom:4px}
+
+/* ══════════════════════════════════════════════════
+   MOBILE
+══════════════════════════════════════════════════ */
+@media(max-width:640px){
+  .details-card{padding:28px 24px}
+  .scripture-inner{padding:36px 24px 32px}
+  .scripture-extra{grid-template-columns:1fr}
+  .rsvp-card{padding:32px 24px}
+  .rsvp-row{grid-template-columns:1fr}
+
+  /* Timeline: single column on mobile */
+  .tl-event{
+    grid-template-columns:36px 1fr;
+    grid-template-rows:auto;
+    gap:0 12px;
+    margin-bottom:40px;
+  }
+  .tl-event.left .tl-content,
+  .tl-event.right .tl-content{
+    grid-column:2;grid-row:1;text-align:left;
+  }
+  .tl-event.left .tl-empty,
+  .tl-event.right .tl-empty{ display:none; }
+  .tl-node{ grid-column:1;grid-row:1;justify-content:flex-start;padding-top:4px; }
+  .tl-bloom{ width:32px;height:32px;box-shadow:0 0 0 3px #f0f4ef,0 0 0 4px rgba(184,146,58,.2); }
+  #vine-axis{ left:18px;transform:none;width:36px; }
+  .timeline-wrap{ padding:0 8px 0 0; }
+
+  /* Venue */
+  .venue-wrap{ grid-template-columns:1fr; }
+  .venue-map{ min-height:180px; }
+  .venue-info-panel{ border-left:none;border-top:1px solid var(--border); }
+
+  /* Notes */
+  .notes-wrap{ grid-template-columns:1fr; }
+  .transport-row{ flex-direction:column;gap:10px; }
+}
+/* ══════════════════════════════════════════════════
+   COVER ENVELOPE  (z-index: 9999 — above everything)
+══════════════════════════════════════════════════ */
+#cover{
+  position:fixed;inset:0;z-index:9999;
+  display:flex;perspective:1600px;
+  background:#0a0e28;  /* deep royal blue */
+  overflow:hidden;
+}
+
+/* Royal blue velvet radial glow */
+#cover::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 40%, rgba(20,30,100,.0) 0%, rgba(5,8,40,.6) 100%),
+    radial-gradient(ellipse 100% 100% at 50% 50%, rgba(212,175,55,.04) 40%, transparent 70%);
+  z-index:0;
+}
+
+/* Gold seam down the centre */
+#cover::after{
+  content:'';
+  position:absolute;left:50%;top:8%;height:84%;width:1px;
+  background:linear-gradient(to bottom,transparent,rgba(212,175,55,.6) 20%,rgba(212,175,55,.6) 80%,transparent);
+  transform:translateX(-50%);
+  z-index:5;pointer-events:none;
+}
+
+/* ── Two half-panels ── */
+.cover-panel{
+  position:relative;width:50%;height:100%;
+  transform-style:preserve-3d;will-change:transform;
+  overflow:hidden;
+}
+.cover-panel.left { transform-origin:left center; }
+.cover-panel.right{ transform-origin:right center; }
+
+/* Velvet-blue panel fill */
+.cover-parchment{
+  position:absolute;inset:0;
+  background:linear-gradient(160deg,#0d1230 0%,#080d22 40%,#060a1a 100%);
+}
+/* Subtle velvet weave pattern */
+.cover-parchment::after{
+  content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 3px,
+    rgba(212,175,55,.025) 3px,
+    rgba(212,175,55,.025) 4px
+  );
+}
+
+/* ── Decorative SVG border art on each panel ── */
+.cover-art{
+  position:absolute;inset:0;width:100%;height:100%;
+  pointer-events:none;overflow:visible;
+}
+
+/* ── Central content sits in a full-width absolute container
+      so names appear centered across the two panel seam ── */
+#cover-center{
+  position:absolute;inset:0;z-index:10;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  pointer-events:none;
+  gap:0;
+}
+
+/* Wedding date badge */
+.cover-date-badge{
+  font-family:'Cinzel',serif;
+  font-size:clamp(.55rem,1.2vw,.72rem);
+  letter-spacing:.45em;text-transform:uppercase;
+  color:#f0cc60;opacity:1;
+  margin-bottom:28px;display:flex;align-items:center;gap:14px;
+}
+.cover-date-badge::before,.cover-date-badge::after{
+  content:'';display:block;width:40px;height:1px;
+  background:linear-gradient(to right,transparent,#d4af37);
+}
+.cover-date-badge::after{
+  background:linear-gradient(to left,transparent,#d4af37);
+}
+
+/* Monogram ring */
+.cover-monogram{
+  width:90px;height:90px;border-radius:50%;
+  border:1.5px solid #d4af37;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:24px;
+  box-shadow:0 0 0 6px rgba(10,14,40,1),0 0 0 7.5px rgba(212,175,55,.5),0 0 28px rgba(212,175,55,.2);
+  background:rgba(10,14,40,.8);
+  position:relative;
+}
+.cover-monogram::before{
+  content:'';position:absolute;inset:7px;border-radius:50%;
+  border:1px solid rgba(212,175,55,.3);
+}
+.cover-mono-text{
+  font-family:'Pinyon Script',cursive;
+  font-size:2.2rem;color:#f0cc60;line-height:1;
+  text-shadow:0 0 20px rgba(212,175,55,.6);
+}
+
+/* Grace line */
+.cover-grace{
+  font-family:'Cinzel',serif;
+  font-size:clamp(.48rem,1vw,.62rem);
+  letter-spacing:.35em;text-transform:uppercase;
+  color:rgba(240,204,96,.75);opacity:1;
+  margin-bottom:32px;
+  text-align:center;
+  max-width:380px;
+  line-height:1.9;
+}
+
+/* Gold rule */
+.cover-rule{
+  display:flex;align-items:center;gap:12px;
+  margin-bottom:20px;width:min(340px,70vw);
+}
+.cover-rule::before,.cover-rule::after{
+  content:'';flex:1;height:1px;
+  background:linear-gradient(to right,transparent,#d4af37,transparent);
+}
+.cover-diamond{
+  width:8px;height:8px;background:#d4af37;
+  transform:rotate(45deg);flex-shrink:0;
+  box-shadow:0 0 8px rgba(212,175,55,.5);
+}
+
+/* Bride & Groom names — glowing gold against royal blue */
+.cover-names{
+  font-family:'Pinyon Script',cursive;
+  font-size:clamp(3.8rem,9vw,7rem);
+  line-height:1.0;
+  text-align:center;
+  margin-bottom:16px;
+  background:linear-gradient(
+    135deg,
+    #8b6a00 0%,
+    #d4af37 16%,
+    #ffe878 30%,
+    #c89820 42%,
+    #f0d050 54%,
+    #d4af37 65%,
+    #fff0a0 76%,
+    #b08010 88%,
+    #e8c840 100%
+  );
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 3px 20px rgba(212,175,55,.7))
+         drop-shadow(0 0 60px rgba(212,175,55,.35));
+  letter-spacing:.01em;
+}
+
+/* Ampersand between names */
+.cover-amp{
+  font-family:'Cormorant Garamond',serif;
+  font-size:.55em;font-style:italic;
+  display:block;line-height:1;
+  margin:.05em 0;
+  color:#f0cc60;
+  -webkit-text-fill-color:#f0cc60;
+}
+
+/* Subtitle below names */
+.cover-subtitle{
+  font-family:'Cinzel',serif;
+  font-size:clamp(.5rem,1.1vw,.65rem);
+  letter-spacing:.38em;text-transform:uppercase;
+  color:rgba(240,204,96,.7);
+  margin-bottom:44px;
+  text-align:center;
+}
+
+/* ── Open Invitation button — gold on blue ── */
+.cover-open-btn{
+  pointer-events:all;
+  font-family:'Cinzel',serif;
+  font-size:clamp(.55rem,1.2vw,.72rem);
+  letter-spacing:.38em;text-transform:uppercase;
+  background:transparent;
+  border:1.5px solid #d4af37;
+  color:#f0cc60;
+  padding:16px 46px;
+  cursor:pointer;
+  position:relative;overflow:hidden;
+  transition:color .35s;
+  display:flex;align-items:center;gap:12px;
+  box-shadow:0 0 20px rgba(212,175,55,.15);
+}
+.cover-open-btn::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,#d4af37,#f0cc60);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .4s cubic-bezier(.25,.46,.45,.94);
+  z-index:0;
+}
+.cover-open-btn:hover{color:#0d1230;}
+.cover-open-btn:hover::before{transform:scaleX(1);}
+.cover-open-btn span{position:relative;z-index:1;}
+.cover-open-btn svg{width:16px;height:16px;position:relative;z-index:1;transition:transform .3s}
+.cover-open-btn:hover svg{transform:translateX(4px)}
+
+/* Gold flicker on names */
+@keyframes goldFlicker{
+  0%,100%{filter:drop-shadow(0 3px 20px rgba(212,175,55,.7)) drop-shadow(0 0 60px rgba(212,175,55,.35))}
+  50%    {filter:drop-shadow(0 3px 28px rgba(240,204,96,.9)) drop-shadow(0 0 80px rgba(212,175,55,.55))}
+}
+.cover-names{animation:goldFlicker 4s ease-in-out infinite}
+
+/* ══════════════════════════════════════════════════
+   FORMAL CARD  (first section of invitation content)
+   Sits just below the hero — revealed after cover opens
+══════════════════════════════════════════════════ */
+.formal-card-section{
+  padding:90px 24px 80px;
+  text-align:center;
+  position:relative;
+  background:linear-gradient(to bottom,var(--cream) 0%,#f0e8d0 30%,#f8f0e0 70%,var(--cream) 100%);
+  overflow:hidden;
+}
+
+/* Vivid watermark cross */
+.formal-card-section::before{
+  content:'✝';
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  font-size:clamp(200px,45vw,340px);
+  color:rgba(212,175,55,.06);pointer-events:none;z-index:0;
+  font-family:serif;line-height:1;
+}
+
+/* Floral wreath decoration around the card — injected as pseudo + SVG */
+.formal-card{
+  width:100%;
+  background:var(--paper);
+  border:2px solid var(--border-strong);
+  padding:clamp(36px,6vw,70px) clamp(24px,5vw,60px);
+  position:relative;z-index:1;
+  box-shadow:0 10px 60px rgba(26,21,15,.15),0 2px 10px rgba(212,175,55,.18);
+}
+
+/* Outer double border */
+.formal-card::before{
+  content:'';position:absolute;inset:0;
+  border:2px solid var(--border-strong);pointer-events:none;
+}
+.formal-card::after{
+  content:'';position:absolute;inset:14px;
+  border:1px solid rgba(212,175,55,.3);pointer-events:none;
+}
+
+/* Formal card wreath wrapper — animates in on scroll */
+#formal-section .wreath-wrap{
+  display:block;
+  width:100%;max-width:680px;margin:0 auto;
+  transform:scale(.92);opacity:0;
+  transition:none; /* GSAP handles */
+}
+
+/* SVG ornamental border — absolute, covers card, pointer-events none */
+.formal-card-art{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  pointer-events:none;
+  z-index:2;
+  overflow:visible;
+}
+
+/* Grace line — vivid gold */
+.formal-grace{
+  font-family:'Cinzel',serif;
+  font-size:clamp(.52rem,1.2vw,.68rem);
+  letter-spacing:.38em;text-transform:uppercase;
+  color:var(--gold);
+  display:block;margin-bottom:28px;
+  position:relative;z-index:3;
+  line-height:1.9;
+  text-shadow:0 1px 8px rgba(212,175,55,.18);
+}
+
+/* Divider — bolder */
+.formal-divider{
+  display:flex;align-items:center;gap:14px;
+  max-width:300px;margin:20px auto;
+}
+.formal-divider::before,.formal-divider::after{
+  content:'';flex:1;height:1.5px;
+  background:linear-gradient(to right,transparent,var(--gold),transparent);
+}
+.formal-divider-ornament{
+  font-family:serif;font-size:.9rem;color:var(--gold);
+}
+
+/* Parent names — deeper */
+.formal-parents{
+  display:grid;grid-template-columns:1fr auto 1fr;
+  gap:0 20px;align-items:start;
+  margin:24px 0;position:relative;z-index:3;
+}
+.formal-parent-col{text-align:center}
+.formal-parent-role{
+  font-family:'Cinzel',serif;
+  font-size:clamp(.45rem,.9vw,.55rem);
+  letter-spacing:.28em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:7px;display:block;
+}
+.formal-parent-names{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(.9rem,1.8vw,1.08rem);
+  font-style:italic;color:var(--ink);
+  line-height:1.65;
+}
+.formal-parents-sep{
+  display:flex;align-items:center;padding-top:22px;
+  color:var(--gold);opacity:.6;font-size:.9rem;
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+}
+
+/* Request line */
+.formal-request{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(.95rem,2vw,1.18rem);
+  font-style:italic;font-weight:300;
+  color:var(--ink-lt);
+  max-width:480px;margin:24px auto;
+  line-height:1.85;position:relative;z-index:3;
+}
+
+/* Couple names — vivid gold foil, bolder gradient */
+.formal-couple-names{
+  font-family:'Pinyon Script',cursive;
+  font-size:clamp(3rem,7.5vw,5.2rem);
+  line-height:1.05;
+  margin:8px 0 18px;
+  position:relative;z-index:3;
+  background:linear-gradient(
+    160deg,
+    #4a2800 0%,
+    #c89010 10%,
+    #ffe060 22%,
+    #b07808 34%,
+    #f0c840 46%,
+    #c89010 55%,
+    #fff090 65%,
+    #d4a020 76%,
+    #ffe878 86%,
+    #8b5e00 100%
+  );
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 4px 20px rgba(212,175,55,.45));
+  letter-spacing:.015em;
+}
+.formal-couple-amp{
+  font-family:'Cormorant Garamond',serif;
+  font-size:.45em;font-style:italic;
+  display:block;line-height:1;
+}
+
+/* Couple names — 3D hover tilt effect */
+.formal-couple-names:hover{
+  animation:coupleTilt 0.8s ease forwards;
+}
+@keyframes coupleTilt{
+  0%   {transform:perspective(600px) rotateX(0)  rotateY(0)  scale(1)}
+  30%  {transform:perspective(600px) rotateX(4deg) rotateY(-6deg) scale(1.03)}
+  60%  {transform:perspective(600px) rotateX(-2deg) rotateY(5deg) scale(1.03)}
+  100% {transform:perspective(600px) rotateX(0) rotateY(0) scale(1)}
+}
+
+/* When-where details */
+.formal-when-where{
+  position:relative;z-index:3;
+  margin-top:24px;padding-top:22px;
+  border-top:1.5px solid rgba(212,175,55,.3);
+}
+.formal-date-large{
+  font-family:'Cinzel',serif;
+  font-size:clamp(1rem,2.2vw,1.3rem);
+  font-weight:500;color:var(--gold);
+  letter-spacing:.1em;margin-bottom:6px;
+}
+.formal-detail-text{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(.88rem,1.6vw,1rem);
+  font-style:italic;color:var(--ink-lt);
+  line-height:1.8;
+}
+.formal-venue-name{
+  font-family:'Cinzel',serif;
+  font-size:clamp(.58rem,1.1vw,.72rem);
+  letter-spacing:.22em;text-transform:uppercase;
+  color:var(--ink-lt);opacity:.8;
+  margin-top:4px;display:block;
+}
+
+/* Reveal animation state */
+.formal-reveal{opacity:0;transform:translateY(22px)}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════
+     COVER ENVELOPE  (z-index 9999 — first view)
+══════════════════════════════════════════════════ -->
+<div id="cover" role="dialog" aria-label="Wedding invitation cover">
+
+  <!-- Left half-panel -->
+  <div class="cover-panel left" id="cover-left">
+    <div class="cover-parchment"></div>
+    <!-- Decorative corner florals on the left panel -->
+    <svg class="cover-art" viewBox="0 0 100 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="cvBlur3"><feGaussianBlur stdDeviation="3"/></filter>
+        <filter id="cvBlur1p5"><feGaussianBlur stdDeviation="1.5"/></filter>
+        <filter id="cvBlur1"><feGaussianBlur stdDeviation="1"/></filter>
+      </defs>
+      <!-- Top-left rose cluster -->
+      <circle cx="12" cy="12" r="11" fill="rgba(201,106,122,.22)" filter="url(#cvBlur3)"/>
+      <circle cx="12" cy="12" r="7"  fill="rgba(201,106,122,.4)"/>
+      <circle cx="12" cy="12" r="3.5"fill="rgba(185,80,100,.58)"/>
+      <circle cx="26" cy="8"  r="8"  fill="rgba(232,180,188,.3)"  filter="url(#cvBlur3)"/>
+      <circle cx="26" cy="8"  r="5"  fill="rgba(201,106,122,.45)"/>
+      <circle cx="7"  cy="26" r="7"  fill="rgba(201,106,122,.28)"/>
+      <circle cx="7"  cy="26" r="4"  fill="rgba(220,130,148,.45)"/>
+      <!-- Wisteria droops top -->
+      <ellipse cx="38" cy="6" rx="7" ry="12" fill="rgba(183,166,220,.48)" transform="rotate(-8,38,6)"  filter="url(#cvBlur1p5)"/>
+      <ellipse cx="52" cy="4" rx="6" ry="10" fill="rgba(165,148,208,.42)" transform="rotate(5,52,4)"   filter="url(#cvBlur1p5)"/>
+      <ellipse cx="65" cy="7" rx="5" ry="9"  fill="rgba(183,166,220,.4)"  transform="rotate(-5,65,7)"  filter="url(#cvBlur1p5)"/>
+      <!-- Vine down left edge -->
+      <path d="M0,40 Q8,80 4,120 Q10,160 2,200" stroke="rgba(74,112,80,.35)" stroke-width=".8" fill="none"/>
+      <ellipse cx="5"  cy="60"  rx="6" ry="3" fill="rgba(74,112,80,.35)" transform="rotate(40,5,60)"/>
+      <ellipse cx="8"  cy="95"  rx="6" ry="3" fill="rgba(74,112,80,.32)" transform="rotate(-30,8,95)"/>
+      <ellipse cx="4"  cy="135" rx="5" ry="2.5" fill="rgba(74,112,80,.3)" transform="rotate(50,4,135)"/>
+      <!-- Bottom-left rose -->
+      <circle cx="10" cy="190" r="9"  fill="rgba(155,142,196,.3)"  filter="url(#cvBlur3)"/>
+      <circle cx="10" cy="190" r="5.5"fill="rgba(155,142,196,.5)"/>
+      <!-- Gold thorn corner top-left -->
+      <polygon points="18,4 22,2 21,7" fill="rgba(184,146,58,.5)"/>
+      <polygon points="4,18 2,22 7,21" fill="rgba(184,146,58,.5)"/>
+      <!-- Border line along seam (right edge of left panel) -->
+      <line x1="99" y1="5" x2="99" y2="195" stroke="rgba(184,146,58,.2)" stroke-width=".5"/>
+    </svg>
+  </div>
+
+  <!-- Right half-panel -->
+  <div class="cover-panel right" id="cover-right">
+    <div class="cover-parchment"></div>
+    <svg class="cover-art" viewBox="0 0 100 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="cvBlur3r"><feGaussianBlur stdDeviation="3"/></filter>
+        <filter id="cvBlur1p5r"><feGaussianBlur stdDeviation="1.5"/></filter>
+      </defs>
+      <!-- Top-right rose cluster (mirrored) -->
+      <circle cx="88" cy="12" r="11" fill="rgba(201,106,122,.22)" filter="url(#cvBlur3r)"/>
+      <circle cx="88" cy="12" r="7"  fill="rgba(201,106,122,.4)"/>
+      <circle cx="88" cy="12" r="3.5"fill="rgba(185,80,100,.58)"/>
+      <circle cx="74" cy="8"  r="8"  fill="rgba(232,180,188,.3)"  filter="url(#cvBlur3r)"/>
+      <circle cx="74" cy="8"  r="5"  fill="rgba(201,106,122,.45)"/>
+      <circle cx="93" cy="26" r="7"  fill="rgba(201,106,122,.28)"/>
+      <circle cx="93" cy="26" r="4"  fill="rgba(220,130,148,.45)"/>
+      <!-- Wisteria droops top-right -->
+      <ellipse cx="62" cy="6" rx="7" ry="12" fill="rgba(183,166,220,.48)" transform="rotate(8,62,6)"  filter="url(#cvBlur1p5r)"/>
+      <ellipse cx="48" cy="4" rx="6" ry="10" fill="rgba(165,148,208,.42)" transform="rotate(-5,48,4)" filter="url(#cvBlur1p5r)"/>
+      <!-- Vine down right edge -->
+      <path d="M100,40 Q92,80 96,120 Q90,160 98,200" stroke="rgba(74,112,80,.35)" stroke-width=".8" fill="none"/>
+      <ellipse cx="95" cy="60"  rx="6" ry="3" fill="rgba(74,112,80,.35)" transform="rotate(-40,95,60)"/>
+      <ellipse cx="92" cy="95"  rx="6" ry="3" fill="rgba(74,112,80,.32)" transform="rotate(30,92,95)"/>
+      <ellipse cx="96" cy="135" rx="5" ry="2.5" fill="rgba(74,112,80,.3)" transform="rotate(-50,96,135)"/>
+      <!-- Bottom-right lily -->
+      <circle cx="90" cy="190" r="9"  fill="rgba(155,142,196,.3)"  filter="url(#cvBlur3r)"/>
+      <circle cx="90" cy="190" r="5.5"fill="rgba(155,142,196,.5)"/>
+      <!-- Gold thorn corner top-right -->
+      <polygon points="82,4 78,2 79,7" fill="rgba(184,146,58,.5)"/>
+      <polygon points="96,18 98,22 93,21" fill="rgba(184,146,58,.5)"/>
+      <!-- Border seam (left edge of right panel) -->
+      <line x1="1" y1="5" x2="1" y2="195" stroke="rgba(184,146,58,.2)" stroke-width=".5"/>
+    </svg>
+  </div>
+
+  <!-- Central overlay content — names, button, etc. -->
+  <div id="cover-center">
+
+    <!-- Wax seal / monogram -->
+    <div class="cover-monogram" id="cvMonogram">
+      <span class="cover-mono-text">I&amp;N</span>
+    </div>
+
+    <!-- Grace line -->
+    <p class="cover-grace" id="cvGrace">
+      By the Grace &amp; Blessings<br>of Almighty God
+    </p>
+
+    <!-- Gold rule -->
+    <div class="cover-rule" id="cvRule1"><div class="cover-diamond"></div></div>
+
+    <!-- Date badge -->
+    <span class="cover-date-badge" id="cvDate">14 June 2025</span>
+
+    <!-- Names — the centrepiece -->
+    <h1 class="cover-names" id="cvNames" aria-label="Isabella and Nathaniel">
+      Isabella<br>
+      <span class="cover-amp">&amp;</span>
+      Nathaniel
+    </h1>
+
+    <p class="cover-subtitle" id="cvSubtitle">unite in holy matrimony</p>
+
+    <!-- Gold rule -->
+    <div class="cover-rule" id="cvRule2"><div class="cover-diamond"></div></div>
+
+    <!-- The button -->
+    <button class="cover-open-btn" id="cover-open-btn" aria-label="Open the invitation">
+      <span>Open Invitation</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+    </button>
+
+  </div><!-- /cover-center -->
+</div><!-- /cover -->
+
+<!-- ══════════════════════════════════════════════════
+     THEATRE (floral arch — shown AFTER cover opens)
+══════════════════════════════════════════════════ -->
+<div id="theatre">
+  <div class="gate-panel left" id="gate-left">
+    <div class="arch-bg"></div>
+    <svg class="arch-art" viewBox="0 0 1400 900" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <radialGradient id="archBg" cx="50%" cy="40%">
+          <stop offset="0%" stop-color="#faf3e5"/>
+          <stop offset="100%" stop-color="#efe3cc"/>
+        </radialGradient>
+        <filter id="archBlur2"><feGaussianBlur stdDeviation="2"/></filter>
+        <filter id="archBlur5"><feGaussianBlur stdDeviation="5"/></filter>
+        <filter id="archBlur1"><feGaussianBlur stdDeviation="1"/></filter>
+      </defs>
+      <rect width="1400" height="900" fill="url(#archBg)"/>
+      <!-- wisteria -->
+      <ellipse cx="700" cy="60" rx="320" ry="55" fill="rgba(155,142,196,.18)" filter="url(#archBlur5)"/>
+      <g opacity=".82">
+        <ellipse cx="520" cy="40" rx="28" ry="48" fill="rgba(183,166,220,.55)" transform="rotate(-12,520,40)" filter="url(#archBlur2)"/>
+        <ellipse cx="620" cy="35" rx="26" ry="44" fill="rgba(176,158,216,.52)" transform="rotate(-8,620,35)"  filter="url(#archBlur2)"/>
+        <ellipse cx="780" cy="38" rx="25" ry="42" fill="rgba(183,166,220,.5)"  transform="rotate(6,780,38)"   filter="url(#archBlur2)"/>
+        <ellipse cx="840" cy="35" rx="22" ry="40" fill="rgba(195,176,228,.5)"  transform="rotate(-10,840,35)" filter="url(#archBlur2)"/>
+      </g>
+      <!-- roses left -->
+      <g opacity=".88">
+        <circle cx="200" cy="140" r="42" fill="rgba(201,106,122,.4)"  filter="url(#archBlur5)"/>
+        <circle cx="200" cy="140" r="28" fill="rgba(201,106,122,.55)" filter="url(#archBlur2)"/>
+        <circle cx="200" cy="140" r="16" fill="rgba(185,80,100,.65)"  filter="url(#archBlur1)"/>
+        <circle cx="130" cy="220" r="36" fill="rgba(201,106,122,.35)" filter="url(#archBlur5)"/>
+        <circle cx="130" cy="220" r="22" fill="rgba(220,130,148,.5)"  filter="url(#archBlur2)"/>
+        <circle cx="90"  cy="400" r="30" fill="rgba(201,106,122,.38)" filter="url(#archBlur5)"/>
+        <circle cx="90"  cy="400" r="18" fill="rgba(220,130,148,.52)" filter="url(#archBlur2)"/>
+        <circle cx="150" cy="490" r="34" fill="rgba(201,106,122,.36)" filter="url(#archBlur5)"/>
+        <circle cx="150" cy="490" r="21" fill="rgba(201,106,122,.5)"  filter="url(#archBlur2)"/>
+      </g>
+      <!-- roses right -->
+      <g opacity=".88">
+        <circle cx="1200" cy="140" r="42" fill="rgba(201,106,122,.4)"  filter="url(#archBlur5)"/>
+        <circle cx="1200" cy="140" r="28" fill="rgba(201,106,122,.55)" filter="url(#archBlur2)"/>
+        <circle cx="1200" cy="140" r="16" fill="rgba(185,80,100,.65)"  filter="url(#archBlur1)"/>
+        <circle cx="1270" cy="230" r="36" fill="rgba(201,106,122,.35)" filter="url(#archBlur5)"/>
+        <circle cx="1270" cy="230" r="22" fill="rgba(220,130,148,.5)"  filter="url(#archBlur2)"/>
+        <circle cx="1310" cy="410" r="30" fill="rgba(201,106,122,.38)" filter="url(#archBlur5)"/>
+        <circle cx="1310" cy="410" r="18" fill="rgba(220,130,148,.52)" filter="url(#archBlur2)"/>
+        <circle cx="1250" cy="500" r="34" fill="rgba(201,106,122,.36)" filter="url(#archBlur5)"/>
+        <circle cx="1250" cy="500" r="21" fill="rgba(201,106,122,.5)"  filter="url(#archBlur2)"/>
+      </g>
+      <!-- vines -->
+      <g stroke="rgba(74,112,80,.45)" stroke-width="2.5" fill="none" opacity=".7">
+        <path d="M180,580 Q220,480 200,380 Q190,280 210,160 Q230,80 300,40"/>
+        <path d="M160,600 Q140,500 110,400 Q90,310 120,220 Q140,150 160,100"/>
+        <path d="M1220,570 Q1180,470 1200,360 Q1210,270 1195,170 Q1180,90 1120,50"/>
+        <path d="M1240,595 Q1260,495 1290,390 Q1310,310 1290,220 Q1270,140 1248,95"/>
+      </g>
+      <g fill="rgba(74,112,80,.38)" opacity=".8">
+        <ellipse cx="220" cy="450" rx="16" ry="9" transform="rotate(-40,220,450)"/>
+        <ellipse cx="200" cy="350" rx="14" ry="8" transform="rotate(-20,200,350)"/>
+        <ellipse cx="215" cy="250" rx="15" ry="8" transform="rotate(-55,215,250)"/>
+        <ellipse cx="1180" cy="440" rx="16" ry="9" transform="rotate(40,1180,440)"/>
+        <ellipse cx="1200" cy="340" rx="14" ry="8" transform="rotate(20,1200,340)"/>
+        <ellipse cx="1190" cy="240" rx="15" ry="8" transform="rotate(55,1190,240)"/>
+      </g>
+      <!-- arch frame -->
+      <path d="M540,900 L540,300 Q540,100 700,80 Q860,100 860,300 L860,900" fill="none" stroke="rgba(184,146,58,.35)" stroke-width="2"/>
+    </svg>
+  </div>
+
+  <div class="gate-panel right" id="gate-right">
+    <div class="arch-bg"></div>
+    <svg class="arch-art" viewBox="0 0 1400 900" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+      <!-- reuse same visuals, different defs namespace -->
+      <defs>
+        <radialGradient id="archBg2" cx="50%" cy="40%">
+          <stop offset="0%" stop-color="#faf3e5"/>
+          <stop offset="100%" stop-color="#efe3cc"/>
+        </radialGradient>
+        <filter id="rb2"><feGaussianBlur stdDeviation="2"/></filter>
+        <filter id="rb5"><feGaussianBlur stdDeviation="5"/></filter>
+        <filter id="rb1"><feGaussianBlur stdDeviation="1"/></filter>
+      </defs>
+      <rect width="1400" height="900" fill="url(#archBg2)"/>
+      <ellipse cx="700" cy="60" rx="320" ry="55" fill="rgba(155,142,196,.18)" filter="url(#rb5)"/>
+      <g opacity=".82">
+        <ellipse cx="520" cy="40" rx="28" ry="48" fill="rgba(183,166,220,.55)" transform="rotate(-12,520,40)" filter="url(#rb2)"/>
+        <ellipse cx="620" cy="35" rx="26" ry="44" fill="rgba(176,158,216,.52)" transform="rotate(-8,620,35)"  filter="url(#rb2)"/>
+        <ellipse cx="780" cy="38" rx="25" ry="42" fill="rgba(183,166,220,.5)"  transform="rotate(6,780,38)"   filter="url(#rb2)"/>
+        <ellipse cx="840" cy="35" rx="22" ry="40" fill="rgba(195,176,228,.5)"  transform="rotate(-10,840,35)" filter="url(#rb2)"/>
+      </g>
+      <g opacity=".88">
+        <circle cx="200"  cy="140" r="42" fill="rgba(201,106,122,.4)"  filter="url(#rb5)"/>
+        <circle cx="200"  cy="140" r="28" fill="rgba(201,106,122,.55)" filter="url(#rb2)"/>
+        <circle cx="200"  cy="140" r="16" fill="rgba(185,80,100,.65)"  filter="url(#rb1)"/>
+        <circle cx="1200" cy="140" r="42" fill="rgba(201,106,122,.4)"  filter="url(#rb5)"/>
+        <circle cx="1200" cy="140" r="28" fill="rgba(201,106,122,.55)" filter="url(#rb2)"/>
+        <circle cx="1270" cy="230" r="36" fill="rgba(201,106,122,.35)" filter="url(#rb5)"/>
+        <circle cx="1270" cy="230" r="22" fill="rgba(220,130,148,.5)"  filter="url(#rb2)"/>
+        <circle cx="90"   cy="400" r="30" fill="rgba(201,106,122,.38)" filter="url(#rb5)"/>
+        <circle cx="1310" cy="410" r="30" fill="rgba(201,106,122,.38)" filter="url(#rb5)"/>
+        <circle cx="1310" cy="410" r="18" fill="rgba(220,130,148,.52)" filter="url(#rb2)"/>
+      </g>
+      <g stroke="rgba(74,112,80,.45)" stroke-width="2.5" fill="none" opacity=".7">
+        <path d="M180,580 Q220,480 200,380 Q190,280 210,160 Q230,80 300,40"/>
+        <path d="M1220,570 Q1180,470 1200,360 Q1210,270 1195,170 Q1180,90 1120,50"/>
+        <path d="M1240,595 Q1260,495 1290,390 Q1310,310 1290,220 Q1270,140 1248,95"/>
+      </g>
+      <g fill="rgba(74,112,80,.38)" opacity=".8">
+        <ellipse cx="220" cy="450" rx="16" ry="9" transform="rotate(-40,220,450)"/>
+        <ellipse cx="1180" cy="440" rx="16" ry="9" transform="rotate(40,1180,440)"/>
+        <ellipse cx="1200" cy="340" rx="14" ry="8" transform="rotate(20,1200,340)"/>
+      </g>
+      <path d="M540,900 L540,300 Q540,100 700,80 Q860,100 860,300 L860,900" fill="none" stroke="rgba(184,146,58,.35)" stroke-width="2"/>
+    </svg>
+  </div>
+
+  <!-- Open button only — no name title, cover already showed the names -->
+  <button id="open-btn" aria-label="Open invitation">
+    <div class="open-ring">
+      <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M14 4L14 24M14 24L8 18M14 24L20 18" stroke="#d4af6a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M6 10C6 10 9 7 14 7C19 7 22 10 22 10" stroke="rgba(212,175,106,.5)" stroke-width="1" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <span class="open-label">Open Invitation</span>
+  </button>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     FLORAL CORNERS  (self-contained SVG filters per element)
+══════════════════════════════════════════════════ -->
+<svg class="floral-corner tl" width="260" height="260" viewBox="0 0 260 260" xmlns="http://www.w3.org/2000/svg">
+  <defs><filter id="f5a"><feGaussianBlur stdDeviation="5"/></filter></defs>
+  <g opacity=".9">
+    <circle cx="40" cy="40" r="38" fill="rgba(201,106,122,.25)" filter="url(#f5a)"/>
+    <circle cx="40" cy="40" r="24" fill="rgba(201,106,122,.42)"/>
+    <circle cx="40" cy="40" r="13" fill="rgba(185,80,100,.58)"/>
+    <circle cx="90" cy="20" r="28" fill="rgba(232,180,188,.32)" filter="url(#f5a)"/>
+    <circle cx="90" cy="20" r="17" fill="rgba(201,106,122,.45)"/>
+    <circle cx="20" cy="90" r="24" fill="rgba(201,106,122,.30)"/>
+    <circle cx="20" cy="90" r="14" fill="rgba(220,130,148,.48)"/>
+    <ellipse cx="140" cy="15" rx="20" ry="34" fill="rgba(183,166,220,.5)"  transform="rotate(-10,140,15)"/>
+    <ellipse cx="15" cy="145" rx="20" ry="34" fill="rgba(183,166,220,.5)"  transform="rotate(80,15,145)"/>
+  </g>
+  <g stroke="rgba(74,112,80,.5)" stroke-width="1.8" fill="none">
+    <path d="M0,200 Q40,150 60,100 Q80,50 130,10"/>
+    <path d="M0,240 Q60,180 80,120 Q100,70 160,20"/>
+  </g>
+  <g fill="rgba(74,112,80,.4)">
+    <ellipse cx="50"  cy="155" rx="12" ry="7" transform="rotate(-45,50,155)"/>
+    <ellipse cx="70"  cy="115" rx="11" ry="6" transform="rotate(-55,70,115)"/>
+    <ellipse cx="95"  cy="70"  rx="10" ry="6" transform="rotate(-65,95,70)"/>
+    <ellipse cx="65"  cy="190" rx="12" ry="7" transform="rotate(-30,65,190)"/>
+    <ellipse cx="100" cy="145" rx="11" ry="6" transform="rotate(-40,100,145)"/>
+  </g>
+  <g opacity=".65">
+    <ellipse cx="60" cy="60" rx="16" ry="26" fill="rgba(255,230,180,.55)" transform="rotate(-20,60,60)"/>
+    <ellipse cx="52" cy="66" rx="16" ry="26" fill="rgba(255,220,160,.48)" transform="rotate(20,52,66)"/>
+    <circle cx="56"  cy="62" r="5" fill="rgba(220,160,60,.7)"/>
+  </g>
+</svg>
+
+<svg class="floral-corner tr" width="260" height="260" viewBox="0 0 260 260" xmlns="http://www.w3.org/2000/svg">
+  <defs><filter id="f5b"><feGaussianBlur stdDeviation="5"/></filter></defs>
+  <g opacity=".9">
+    <circle cx="40" cy="40" r="38" fill="rgba(201,106,122,.25)" filter="url(#f5b)"/>
+    <circle cx="40" cy="40" r="24" fill="rgba(201,106,122,.42)"/>
+    <circle cx="40" cy="40" r="13" fill="rgba(185,80,100,.58)"/>
+    <circle cx="90" cy="20" r="28" fill="rgba(232,180,188,.32)" filter="url(#f5b)"/>
+    <circle cx="90" cy="20" r="17" fill="rgba(201,106,122,.45)"/>
+    <circle cx="20" cy="90" r="24" fill="rgba(201,106,122,.30)"/>
+    <circle cx="20" cy="90" r="14" fill="rgba(220,130,148,.48)"/>
+    <ellipse cx="140" cy="15" rx="20" ry="34" fill="rgba(183,166,220,.5)"  transform="rotate(-10,140,15)"/>
+    <ellipse cx="15"  cy="145" rx="20" ry="34" fill="rgba(183,166,220,.5)" transform="rotate(80,15,145)"/>
+  </g>
+  <g stroke="rgba(74,112,80,.5)" stroke-width="1.8" fill="none">
+    <path d="M0,200 Q40,150 60,100 Q80,50 130,10"/>
+    <path d="M0,240 Q60,180 80,120 Q100,70 160,20"/>
+  </g>
+  <g fill="rgba(74,112,80,.4)">
+    <ellipse cx="50" cy="155" rx="12" ry="7" transform="rotate(-45,50,155)"/>
+    <ellipse cx="70" cy="115" rx="11" ry="6" transform="rotate(-55,70,115)"/>
+    <ellipse cx="95" cy="70"  rx="10" ry="6" transform="rotate(-65,95,70)"/>
+  </g>
+</svg>
+
+<svg class="floral-corner bl" width="220" height="220" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
+  <g opacity=".8">
+    <circle cx="35" cy="35" r="30" fill="rgba(155,142,196,.35)"/>
+    <circle cx="35" cy="35" r="19" fill="rgba(155,142,196,.52)"/>
+    <circle cx="35" cy="35" r="10" fill="rgba(130,115,175,.6)"/>
+    <circle cx="80" cy="15" r="22" fill="rgba(176,112,136,.4)"/>
+    <circle cx="80" cy="15" r="13" fill="rgba(176,112,136,.55)"/>
+    <circle cx="15" cy="80" r="20" fill="rgba(155,142,196,.38)"/>
+    <circle cx="15" cy="80" r="12" fill="rgba(155,142,196,.5)"/>
+  </g>
+  <g stroke="rgba(74,112,80,.45)" stroke-width="1.6" fill="none">
+    <path d="M0,180 Q30,130 50,80 Q70,40 110,10"/>
+  </g>
+  <g fill="rgba(74,112,80,.38)">
+    <ellipse cx="40" cy="130" rx="11" ry="6" transform="rotate(-45,40,130)"/>
+    <ellipse cx="60" cy="95"  rx="10" ry="5" transform="rotate(-55,60,95)"/>
+  </g>
+</svg>
+
+<svg class="floral-corner br" width="220" height="220" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
+  <g opacity=".8">
+    <circle cx="35" cy="35" r="30" fill="rgba(201,106,122,.32)"/>
+    <circle cx="35" cy="35" r="18" fill="rgba(201,106,122,.48)"/>
+    <circle cx="35" cy="35" r="10" fill="rgba(185,80,100,.58)"/>
+    <circle cx="80" cy="18" r="22" fill="rgba(255,180,100,.38)"/>
+    <circle cx="80" cy="18" r="13" fill="rgba(255,160,80,.5)"/>
+    <circle cx="18" cy="82" r="20" fill="rgba(201,106,122,.35)"/>
+    <circle cx="18" cy="82" r="11" fill="rgba(220,130,148,.5)"/>
+  </g>
+  <g stroke="rgba(74,112,80,.45)" stroke-width="1.6" fill="none">
+    <path d="M0,180 Q30,130 50,80 Q70,40 110,10"/>
+  </g>
+  <g fill="rgba(74,112,80,.38)">
+    <ellipse cx="40" cy="130" rx="11" ry="6" transform="rotate(-45,40,130)"/>
+    <ellipse cx="62" cy="92"  rx="10" ry="5" transform="rotate(-55,62,92)"/>
+  </g>
+</svg>
+
+<!-- ══════════════════════════════════════════════════
+     INVITATION
+══════════════════════════════════════════════════ -->
+<div id="invitation">
+
+  <!-- ══════════════════════════════════════════════
+       FORMAL CARD  (first content revealed)
+  ══════════════════════════════════════════════ -->
+  <section class="formal-card-section" id="formal-section">
+    <div class="wreath-wrap">
+    <div class="formal-card" id="formal-card">
+
+      <!-- Vibrant ornamental SVG — full floral wreath border -->
+      <svg class="formal-card-art" viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- ── Corner rose clusters — saturated magenta & coral ── -->
+        <g opacity="1">
+          <!-- Top-left -->
+          <circle cx="3.5" cy="3.5" r="4"   fill="rgba(196,20,80,.8)"/>
+          <circle cx="3.5" cy="3.5" r="2"   fill="rgba(240,60,100,.9)"/>
+          <circle cx="7"   cy="2"   r="2.5" fill="rgba(232,72,32,.75)"/>
+          <circle cx="2"   cy="7"   r="2.5" fill="rgba(160,32,90,.7)"/>
+          <!-- Top-right -->
+          <circle cx="96.5" cy="3.5" r="4"   fill="rgba(196,20,80,.8)"/>
+          <circle cx="96.5" cy="3.5" r="2"   fill="rgba(240,60,100,.9)"/>
+          <circle cx="93"   cy="2"   r="2.5" fill="rgba(232,72,32,.75)"/>
+          <circle cx="98"   cy="7"   r="2.5" fill="rgba(160,32,90,.7)"/>
+          <!-- Bottom-left -->
+          <circle cx="3.5" cy="96.5" r="4"   fill="rgba(196,20,80,.8)"/>
+          <circle cx="3.5" cy="96.5" r="2"   fill="rgba(96,64,192,.9)"/>
+          <circle cx="7"   cy="98"   r="2.5" fill="rgba(10,136,120,.75)"/>
+          <circle cx="2"   cy="93"   r="2.5" fill="rgba(160,32,90,.7)"/>
+          <!-- Bottom-right -->
+          <circle cx="96.5" cy="96.5" r="4"   fill="rgba(196,20,80,.8)"/>
+          <circle cx="96.5" cy="96.5" r="2"   fill="rgba(96,64,192,.9)"/>
+          <circle cx="93"   cy="98"   r="2.5" fill="rgba(10,136,120,.75)"/>
+          <circle cx="98"   cy="93"   r="2.5" fill="rgba(160,32,90,.7)"/>
+        </g>
+
+        <!-- ── Emerald leaves at mid-sides ── -->
+        <g fill="rgba(15,64,32,.75)" opacity="1">
+          <ellipse cx="50"   cy="1.5"  rx="6"   ry="2.2"/>
+          <ellipse cx="50"   cy="98.5" rx="6"   ry="2.2"/>
+          <ellipse cx="1.5"  cy="50"   rx="2.2" ry="6"/>
+          <ellipse cx="98.5" cy="50"   rx="2.2" ry="6"/>
+          <!-- Extra leaf pairs along edges -->
+          <ellipse cx="25"  cy="1.2"  rx="4" ry="1.8" transform="rotate(-15,25,1.2)"/>
+          <ellipse cx="75"  cy="1.2"  rx="4" ry="1.8" transform="rotate(15,75,1.2)"/>
+          <ellipse cx="25"  cy="98.8" rx="4" ry="1.8" transform="rotate(15,25,98.8)"/>
+          <ellipse cx="75"  cy="98.8" rx="4" ry="1.8" transform="rotate(-15,75,98.8)"/>
+          <ellipse cx="1.2" cy="25"   rx="1.8" ry="4" transform="rotate(-15,1.2,25)"/>
+          <ellipse cx="1.2" cy="75"   rx="1.8" ry="4" transform="rotate(15,1.2,75)"/>
+          <ellipse cx="98.8" cy="25"  rx="1.8" ry="4" transform="rotate(15,98.8,25)"/>
+          <ellipse cx="98.8" cy="75"  rx="1.8" ry="4" transform="rotate(-15,98.8,75)"/>
+        </g>
+
+        <!-- ── Sun-gold thorn spurs ── -->
+        <g fill="rgba(212,175,55,.85)">
+          <polygon points="8,3.5 13,1.5 11,6.5"/>
+          <polygon points="92,3.5 87,1.5 89,6.5"/>
+          <polygon points="8,96.5 13,98.5 11,93.5"/>
+          <polygon points="92,96.5 87,98.5 89,93.5"/>
+          <polygon points="50,0.5 52.5,4 47.5,4"/>
+          <polygon points="50,99.5 52.5,96 47.5,96"/>
+          <polygon points="0.5,50 4,52.5 4,47.5"/>
+          <polygon points="99.5,50 96,52.5 96,47.5"/>
+        </g>
+
+        <!-- ── Small floral buds along top & bottom edges ── -->
+        <g opacity=".9">
+          <circle cx="30" cy="2"   r="2"   fill="rgba(96,64,192,.8)"/><!-- violet -->
+          <circle cx="38" cy="1.5" r="1.5" fill="rgba(10,136,120,.8)"/><!-- teal -->
+          <circle cx="62" cy="2"   r="2"   fill="rgba(10,136,120,.8)"/><!-- teal -->
+          <circle cx="70" cy="1.5" r="1.5" fill="rgba(96,64,192,.8)"/><!-- violet -->
+          <circle cx="30" cy="98"   r="2"   fill="rgba(232,72,32,.8)"/><!-- coral -->
+          <circle cx="38" cy="98.5" r="1.5" fill="rgba(212,175,55,.9)"/><!-- gold -->
+          <circle cx="62" cy="98"   r="2"   fill="rgba(212,175,55,.9)"/><!-- gold -->
+          <circle cx="70" cy="98.5" r="1.5" fill="rgba(232,72,32,.8)"/><!-- coral -->
+          <!-- Side buds -->
+          <circle cx="1.5" cy="35"  r="1.8" fill="rgba(196,20,80,.8)"/>
+          <circle cx="1.5" cy="65"  r="1.8" fill="rgba(212,175,55,.8)"/>
+          <circle cx="98.5" cy="35" r="1.8" fill="rgba(196,20,80,.8)"/>
+          <circle cx="98.5" cy="65" r="1.8" fill="rgba(212,175,55,.8)"/>
+        </g>
+
+        <!-- ── Gold quarter-circle corner flourishes ── -->
+        <g stroke="rgba(212,175,55,.6)" stroke-width=".6" fill="none">
+          <path d="M10,2 Q2,2 2,10"/>
+          <path d="M90,2 Q98,2 98,10"/>
+          <path d="M10,98 Q2,98 2,90"/>
+          <path d="M90,98 Q98,98 98,90"/>
+        </g>
+      </svg>
+
+      <!-- Content layered above the card art -->
+
+      <!-- Grace blessing at top -->
+      <span class="formal-grace formal-reveal" id="fc-grace">
+        By the Grace &amp; Blessings of Almighty God
+      </span>
+
+      <!-- Gold divider -->
+      <div class="formal-divider formal-reveal" id="fc-div1">
+        <span class="formal-divider-ornament">✦</span>
+      </div>
+
+      <!-- Parent lineage -->
+      <div class="formal-parents formal-reveal" id="fc-parents">
+        <!-- Parents of the Bride -->
+        <div class="formal-parent-col">
+          <span class="formal-parent-role">Parents of the Bride</span>
+          <div class="formal-parent-names">
+            Mr. &amp; Mrs.<br>
+            <em>Antonio &amp; Lucia<br>Romani</em>
+          </div>
+        </div>
+        <!-- Separator -->
+        <div class="formal-parents-sep">&amp;</div>
+        <!-- Parents of the Groom -->
+        <div class="formal-parent-col">
+          <span class="formal-parent-role">Parents of the Groom</span>
+          <div class="formal-parent-names">
+            Mr. &amp; Mrs.<br>
+            <em>James &amp; Eleanor<br>Whitmore</em>
+          </div>
+        </div>
+      </div>
+
+      <!-- Request line -->
+      <p class="formal-request formal-reveal" id="fc-request">
+        request the honour of your presence<br>
+        at the marriage of their children
+      </p>
+
+      <!-- Gold divider -->
+      <div class="formal-divider formal-reveal" id="fc-div2">
+        <span class="formal-divider-ornament">✦</span>
+      </div>
+
+      <!-- Couple names — gold foil centrepiece -->
+      <h2 class="formal-couple-names formal-reveal" id="fc-names" aria-label="Isabella Romani and Nathaniel Whitmore">
+        Isabella Romani<br>
+        <span class="formal-couple-amp">&amp;</span>
+        Nathaniel Whitmore
+      </h2>
+
+      <!-- Gold divider -->
+      <div class="formal-divider formal-reveal" id="fc-div3">
+        <span class="formal-divider-ornament">✦</span>
+      </div>
+
+      <!-- When & Where -->
+      <div class="formal-when-where formal-reveal" id="fc-details">
+        <div class="formal-date-large">Saturday, the Fourteenth of June</div>
+        <div class="formal-detail-text">
+          Two Thousand and Twenty-Five<br>
+          at four o'clock in the afternoon
+        </div>
+        <span class="formal-venue-name">
+          Villa Medicea di Artimino · Artimino, Tuscany, Italy
+        </span>
+      </div>
+
+    </div><!-- /formal-card -->
+    </div><!-- /wreath-wrap -->
+  </section>
+
+  <!-- HERO — monogram, date & details only (names already on cover + formal card) -->
+  <section class="hero-section">
+    <div class="monogram-ring reveal"><span class="monogram">I&amp;N</span></div>
+    <p class="hero-eyebrow reveal">Together with their families</p>
+    <p class="hero-tagline reveal">invite you to witness their marriage</p>
+    <div class="gold-rule reveal"><div class="gold-rule-diamond"></div></div>
+    <div class="details-card reveal">
+      <div class="details-row">
+        <div class="detail-block">
+          <span class="detail-label">The Day</span>
+          <span class="detail-value large">Saturday</span>
+          <span class="detail-value">14 June 2025</span>
+        </div>
+        <div class="divider"></div>
+        <div class="detail-block">
+          <span class="detail-label">The Hour</span>
+          <span class="detail-value large">4:00</span>
+          <span class="detail-value">in the afternoon</span>
+        </div>
+      </div>
+      <div class="gold-rule" style="margin:20px auto;max-width:200px"><div class="gold-rule-diamond"></div></div>
+      <div class="detail-block">
+        <span class="detail-label">The Place</span>
+        <span class="detail-value" style="font-size:1.15rem;font-style:italic">Villa Medicea di Artimino Garden</span>
+        <span class="detail-value" style="font-size:.88rem;color:var(--ink-lt);margin-top:4px;display:block">Artimino, Tuscany, Italy</span>
+      </div>
+      <div style="margin-top:22px;padding-top:18px;border-top:1px solid var(--border)">
+        <span class="detail-label">Dress Code</span>
+        <span class="detail-value" style="font-style:italic">Formal Garden Attire</span>
+      </div>
+    </div>
+    <div class="vine-divider reveal">
+      <svg width="240" height="30" viewBox="0 0 240 30" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20,15 Q60,5 120,15 Q180,25 220,15" stroke="rgba(74,112,80,.6)" stroke-width="1.5" fill="none"/>
+        <circle cx="120" cy="15" r="3" fill="rgba(184,146,58,.6)"/>
+        <ellipse cx="60"  cy="10" rx="9" ry="5" fill="rgba(74,112,80,.4)" transform="rotate(-20,60,10)"/>
+        <ellipse cx="90"  cy="19" rx="8" ry="4" fill="rgba(74,112,80,.35)" transform="rotate(15,90,19)"/>
+        <ellipse cx="150" cy="11" rx="8" ry="4" fill="rgba(74,112,80,.35)" transform="rotate(-15,150,11)"/>
+        <ellipse cx="180" cy="20" rx="9" ry="5" fill="rgba(74,112,80,.4)" transform="rotate(20,180,20)"/>
+        <circle cx="45"  cy="8"  r="5" fill="rgba(201,106,122,.45)"/>
+        <circle cx="195" cy="22" r="5" fill="rgba(201,106,122,.45)"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       SCRIPTURE SECTION — full redesign
+  ══════════════════════════════════════════════ -->
+  <section class="scripture-section" id="scripture-section">
+
+    <p class="scripture-eyebrow reveal">A Covenant of Faith</p>
+    <h2 class="scripture-title reveal">Sacred <em>Words</em> for a Sacred Day</h2>
+
+    <!-- Primary verse: 1 Corinthians 13 -->
+    <div class="scripture-card reveal" id="scripture-card">
+
+      <!-- Ornamental SVG frame border -->
+      <svg class="scripture-border-svg" viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Corner rose clusters -->
+        <g opacity=".6">
+          <circle cx="3.5" cy="3.5" r="3"   fill="rgba(201,106,122,.65)"/>
+          <circle cx="3.5" cy="3.5" r="1.5" fill="rgba(185,80,100,.8)"/>
+          <circle cx="96.5" cy="3.5" r="3"   fill="rgba(201,106,122,.65)"/>
+          <circle cx="96.5" cy="3.5" r="1.5" fill="rgba(185,80,100,.8)"/>
+          <circle cx="3.5" cy="96.5" r="3"   fill="rgba(201,106,122,.65)"/>
+          <circle cx="3.5" cy="96.5" r="1.5" fill="rgba(185,80,100,.8)"/>
+          <circle cx="96.5" cy="96.5" r="3"   fill="rgba(201,106,122,.65)"/>
+          <circle cx="96.5" cy="96.5" r="1.5" fill="rgba(185,80,100,.8)"/>
+        </g>
+        <!-- Gold thorn spurs at corners -->
+        <g fill="rgba(184,146,58,.55)" opacity=".8">
+          <polygon points="6,3.5 10,2 8.5,6"/>
+          <polygon points="94,3.5 90,2 91.5,6"/>
+          <polygon points="6,96.5 10,98 8.5,94"/>
+          <polygon points="94,96.5 90,98 91.5,94"/>
+          <!-- mid-side thorns -->
+          <polygon points="50,1 52,3.5 48,3.5"/>
+          <polygon points="50,99 52,96.5 48,96.5"/>
+          <polygon points="1,50 3.5,48 3.5,52"/>
+          <polygon points="99,50 96.5,48 96.5,52"/>
+        </g>
+        <!-- Leaf accents mid-sides -->
+        <g fill="rgba(74,112,80,.32)">
+          <ellipse cx="50" cy="1.5" rx="5" ry="1.5"/>
+          <ellipse cx="50" cy="98.5" rx="5" ry="1.5"/>
+          <ellipse cx="1.5" cy="50" rx="1.5" ry="5"/>
+          <ellipse cx="98.5" cy="50" rx="1.5" ry="5"/>
+        </g>
+        <!-- Quarter-circle corner flourishes -->
+        <g stroke="rgba(184,146,58,.22)" stroke-width=".4" fill="none">
+          <path d="M8,2 Q2,2 2,8"/>
+          <path d="M92,2 Q98,2 98,8"/>
+          <path d="M8,98 Q2,98 2,92"/>
+          <path d="M92,98 Q98,98 98,92"/>
+        </g>
+      </svg>
+
+      <div class="scripture-inner">
+        <!-- Reference badge -->
+        <div style="display:flex;justify-content:center;margin-bottom:32px">
+          <div class="scripture-ref">
+            <span class="scripture-ref-line"></span>
+            <span class="scripture-ref-text">1 Corinthians 13 : 4 – 8</span>
+            <span class="scripture-ref-line"></span>
+          </div>
+        </div>
+
+        <!-- Verse body — each stanza is a separate GSAP target -->
+        <div class="scripture-body" id="scripture-body">
+          <span class="scripture-stanza" id="st1">
+            <span class="drop-cap">L</span>ove is patient,
+            <span class="gold-phrase">love is kind.</span>
+          </span>
+          <span class="scripture-stanza" id="st2">
+            It does not envy, it does not boast,<br>
+            it is not proud.
+          </span>
+          <span class="scripture-stanza" id="st3">
+            It does not dishonour others,<br>
+            it is not self-seeking,<br>
+            it is not easily angered —<br>
+            <span class="gold-phrase">it keeps no record of wrongs.</span>
+          </span>
+          <span class="scripture-stanza" id="st4">
+            Love does not delight in evil<br>
+            but <span class="gold-phrase">rejoices with the truth.</span>
+          </span>
+          <span class="scripture-stanza" id="st5">
+            It always protects, always trusts,<br>
+            always hopes, <span class="gold-phrase">always perseveres.</span>
+          </span>
+
+          <!-- Keystone verse -->
+          <span class="keystone-verse" id="keystone">
+            <span class="keystone-text">Love never fails.</span>
+            <span class="keystone-ref">— 1 Corinthians 13:8</span>
+          </span>
+        </div>
+
+        <span class="scripture-attribution">Holy Bible · New International Version</span>
+      </div>
+    </div>
+
+    <!-- Cross ornament between cards -->
+    <div style="margin:36px auto;text-align:center;opacity:.35;z-index:1;position:relative">
+      <svg width="36" height="44" viewBox="0 0 36 44">
+        <rect x="15" y="0"  width="6" height="44" rx="3" fill="var(--gold)"/>
+        <rect x="4"  y="12" width="28" height="6"  rx="3" fill="var(--gold)"/>
+      </svg>
+    </div>
+
+    <!-- Secondary scripture cards -->
+    <div class="scripture-extra" id="scripture-extra">
+      <div class="extra-card" id="ec1">
+        <span class="extra-card-ref">Ruth 1 : 16</span>
+        <p class="extra-card-text">
+          "Where you go I will go,<br>
+          and where you stay I will stay.<br>
+          Your people will be <span class="gold-phrase">my people</span><br>
+          and your God <span class="gold-phrase">my God.</span>"
+        </p>
+      </div>
+      <div class="extra-card" id="ec2">
+        <span class="extra-card-ref">Ecclesiastes 4 : 9</span>
+        <p class="extra-card-text">
+          "<span class="gold-phrase">Two are better than one,</span><br>
+          because they have a good return<br>
+          for their labour:<br>
+          if either of them falls,<br>
+          one can help the other up."
+        </p>
+      </div>
+      <div class="extra-card" id="ec3">
+        <span class="extra-card-ref">Song of Solomon 3 : 4</span>
+        <p class="extra-card-text">
+          "I have found the one<br>
+          <span class="gold-phrase">whom my soul loves.</span>"
+        </p>
+      </div>
+      <div class="extra-card" id="ec4">
+        <span class="extra-card-ref">Colossians 3 : 14</span>
+        <p class="extra-card-text">
+          "And over all these virtues<br>
+          put on <span class="gold-phrase">love,</span><br>
+          which binds them all together<br>
+          in <span class="gold-phrase">perfect unity.</span>"
+        </p>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       EVENT DETAILS — DAY OF GRACE
+  ══════════════════════════════════════════════ -->
+  <section class="events-section" id="events-section">
+
+    <!-- Section header -->
+    <p class="events-eyebrow reveal">Saturday · 14 June 2025</p>
+    <h2 class="events-title reveal">The <em>Day of Grace</em></h2>
+    <span class="events-subtitle reveal">A sacred journey through our wedding day</span>
+
+    <!-- ── Vine Timeline ── -->
+    <div class="timeline-wrap" id="timeline-wrap">
+
+      <!-- SVG vine axis — drawn programmatically by JS -->
+      <svg id="vine-axis" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"></svg>
+
+      <!-- Event 0: Holy Matrimony -->
+      <div class="tl-event left" data-tl="0">
+        <div class="tl-content">
+          <span class="tl-time">11:00</span>
+          <span class="tl-ampm">in the morning</span>
+          <div class="tl-event-title">The Holy Matrimony</div>
+          <p class="tl-event-sub">
+            The sacred exchange of vows and rings<br>
+            in the Cathedral Garden Chapel.<br>
+            <em style="color:var(--gold);font-size:.68rem">Rev. Father Giovanni Mancini presiding</em>
+          </p>
+        </div>
+        <div class="tl-node">
+          <!-- Church icon bloom -->
+          <div class="tl-bloom" aria-label="Church ceremony">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2v4M10 4h4"/>
+              <path d="M5 10h14l1 11H4L5 10Z"/>
+              <path d="M9 21v-6h6v6"/>
+              <path d="M12 10V6"/>
+            </svg>
+          </div>
+        </div>
+        <div class="tl-empty"></div>
+      </div>
+
+      <!-- Event 1: Garden Photos -->
+      <div class="tl-event right" data-tl="1">
+        <div class="tl-empty"></div>
+        <div class="tl-node">
+          <!-- Camera / flower icon bloom -->
+          <div class="tl-bloom" aria-label="Photos and aperitivo">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="13" r="3"/>
+              <path d="M5 7h1l2-3h8l2 3h1a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Z"/>
+            </svg>
+          </div>
+        </div>
+        <div class="tl-content">
+          <span class="tl-time">12:30</span>
+          <span class="tl-ampm">afternoon</span>
+          <div class="tl-event-title">Garden Photos &amp; Aperitivo</div>
+          <p class="tl-event-sub">
+            Stroll the sunlit gardens while<br>
+            guests enjoy chilled Prosecco,<br>
+            antipasti &amp; freshly cut florals.
+          </p>
+        </div>
+      </div>
+
+      <!-- Event 2: Wedding Feast -->
+      <div class="tl-event left" data-tl="2">
+        <div class="tl-content">
+          <span class="tl-time">2:00</span>
+          <span class="tl-ampm">afternoon</span>
+          <div class="tl-event-title">Wedding Feast &amp; Reception</div>
+          <p class="tl-event-sub">
+            A long table under the Tuscan sky —<br>
+            seasonal courses, fine wines, music<br>
+            &amp; the warmth of family and friends.
+          </p>
+        </div>
+        <div class="tl-node">
+          <!-- Dinner icon bloom -->
+          <div class="tl-bloom" aria-label="Wedding feast">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 11l1-7 4 4 3-6 3 6 4-4 1 7"/>
+              <path d="M3 11h18"/>
+              <path d="M5 11l1 10h12l1-10"/>
+            </svg>
+          </div>
+        </div>
+        <div class="tl-empty"></div>
+      </div>
+
+      <!-- Event 3: Cake & Toasts -->
+      <div class="tl-event right" data-tl="3">
+        <div class="tl-empty"></div>
+        <div class="tl-node">
+          <!-- Cake / champagne icon bloom -->
+          <div class="tl-bloom" aria-label="Cake and toasts">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8"/>
+              <path d="M4 21h16"/>
+              <path d="M12 3c0 0-1 2-1 3.5S12 8 12 8s1-1.5 1-2.5S12 3 12 3Z"/>
+              <path d="M9 11h6"/>
+            </svg>
+          </div>
+        </div>
+        <div class="tl-content">
+          <span class="tl-time">4:00</span>
+          <span class="tl-ampm">afternoon</span>
+          <div class="tl-event-title">Cake Cutting &amp; Toasts</div>
+          <p class="tl-event-sub">
+            Raise a glass to the newlyweds.<br>
+            Handwritten words from those<br>
+            we love most in this world.
+          </p>
+        </div>
+      </div>
+
+    </div><!-- /timeline-wrap -->
+
+    <!-- ── Vine divider between timeline and venue ── -->
+    <div style="text-align:center;margin:0 auto 52px;opacity:.45">
+      <svg width="180" height="24" viewBox="0 0 180 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10,12 Q45,4 90,12 Q135,20 170,12" stroke="rgba(74,112,80,.65)" stroke-width="1.5" fill="none"/>
+        <circle cx="90" cy="12" r="2.5" fill="rgba(184,146,58,.65)"/>
+        <ellipse cx="50"  cy="7"  rx="7" ry="4" fill="rgba(74,112,80,.4)" transform="rotate(-18,50,7)"/>
+        <ellipse cx="130" cy="17" rx="7" ry="4" fill="rgba(74,112,80,.4)" transform="rotate(18,130,17)"/>
+        <circle cx="30"  cy="9"  r="4" fill="rgba(201,106,122,.4)"/>
+        <circle cx="150" cy="15" r="4" fill="rgba(201,106,122,.4)"/>
+      </svg>
+    </div>
+
+    <!-- ── Venue Card ── -->
+    <p class="events-eyebrow reveal" style="margin-bottom:18px">The Setting</p>
+    <div class="venue-wrap reveal" id="venue-card">
+
+      <!-- 2D Watercolour Map illustration -->
+      <div class="venue-map" aria-label="Illustrated map of Villa Medicea di Artimino">
+        <svg width="100%" height="100%" viewBox="0 0 320 260" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0">
+          <defs>
+            <filter id="mapBlur3"><feGaussianBlur stdDeviation="3"/></filter>
+            <filter id="mapBlur1"><feGaussianBlur stdDeviation="1"/></filter>
+          </defs>
+          <!-- Rolling hills watercolour washes -->
+          <ellipse cx="160" cy="200" rx="260" ry="90" fill="rgba(122,158,126,.35)" filter="url(#mapBlur3)"/>
+          <ellipse cx="80"  cy="210" rx="120" ry="60" fill="rgba(104,148,110,.28)" filter="url(#mapBlur3)"/>
+          <ellipse cx="260" cy="215" rx="100" ry="50" fill="rgba(90,140,96,.25)"   filter="url(#mapBlur3)"/>
+          <!-- Road / path -->
+          <path d="M0,180 Q80,160 160,165 Q240,170 320,155" stroke="rgba(184,146,58,.4)" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <path d="M0,180 Q80,160 160,165 Q240,170 320,155" stroke="rgba(253,251,247,.6)" stroke-width="1.5" fill="none" stroke-dasharray="8 6"/>
+          <!-- Villa building -->
+          <rect x="120" y="100" width="80" height="50" rx="2" fill="rgba(230,210,180,.85)"/>
+          <rect x="115" y="92"  width="90" height="12" rx="1" fill="rgba(184,146,58,.6)"/>
+          <!-- Roof line -->
+          <polygon points="115,92 160,72 205,92" fill="rgba(160,100,60,.5)"/>
+          <!-- Windows -->
+          <rect x="130" y="112" width="12" height="14" rx="1" fill="rgba(135,190,210,.55)"/>
+          <rect x="148" y="112" width="12" height="14" rx="1" fill="rgba(135,190,210,.55)"/>
+          <rect x="166" y="112" width="12" height="14" rx="1" fill="rgba(135,190,210,.55)"/>
+          <!-- Door -->
+          <rect x="152" y="128" width="16" height="22" rx="1" fill="rgba(120,80,40,.5)"/>
+          <!-- Cypress trees -->
+          <g fill="rgba(60,100,55,.6)">
+            <ellipse cx="108" cy="118" rx="6" ry="20"/>
+            <ellipse cx="212" cy="122" rx="6" ry="18"/>
+            <ellipse cx="96"  cy="128" rx="5" ry="16"/>
+            <ellipse cx="224" cy="130" rx="5" ry="15"/>
+          </g>
+          <!-- Garden parterre -->
+          <rect x="128" y="152" width="64" height="18" rx="2" fill="none" stroke="rgba(74,112,80,.4)" stroke-width="1"/>
+          <ellipse cx="160" cy="161" rx="18" ry="6" fill="rgba(122,158,126,.35)"/>
+          <!-- Rose clusters -->
+          <circle cx="90"  cy="155" r="8"  fill="rgba(201,106,122,.4)" filter="url(#mapBlur1)"/>
+          <circle cx="90"  cy="155" r="5"  fill="rgba(201,106,122,.6)"/>
+          <circle cx="230" cy="150" r="7"  fill="rgba(201,106,122,.38)" filter="url(#mapBlur1)"/>
+          <circle cx="230" cy="150" r="4.5"fill="rgba(201,106,122,.58)"/>
+          <!-- Map pin -->
+          <circle cx="160" cy="80" r="8" fill="rgba(184,146,58,.9)"/>
+          <circle cx="160" cy="80" r="4" fill="#fff" opacity=".9"/>
+          <line x1="160" y1="88" x2="160" y2="98" stroke="rgba(184,146,58,.8)" stroke-width="2"/>
+          <!-- Wisteria wash at top -->
+          <ellipse cx="50"  cy="30" rx="60" ry="28" fill="rgba(183,166,220,.22)" filter="url(#mapBlur3)"/>
+          <ellipse cx="280" cy="35" rx="55" ry="24" fill="rgba(183,166,220,.18)" filter="url(#mapBlur3)"/>
+          <!-- Label -->
+          <text x="160" y="245" font-family="'Cormorant Garamond',serif" font-size="11" fill="rgba(44,35,24,.55)" text-anchor="middle" font-style="italic">Villa Medicea di Artimino</text>
+        </svg>
+      </div>
+
+      <!-- Venue text -->
+      <div class="venue-info-panel">
+        <span class="venue-eyebrow">The Venue</span>
+        <div class="venue-name">Villa Medicea<br>di Artimino</div>
+        <div class="venue-address">
+          <span>Viale Papa Giovanni XXIII, 1</span>
+          <span>59015 Artimino, Prato</span>
+          <span>Tuscany, Italy</span>
+        </div>
+        <a href="https://maps.google.com/?q=Villa+Medicea+di+Artimino" target="_blank" rel="noopener" class="directions-btn" aria-label="Get directions to the venue">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="3 11 22 2 13 21 11 13 3 11"/>
+          </svg>
+          Get Directions
+        </a>
+      </div>
+    </div>
+
+    <!-- ── Dress Code & Notes ── -->
+    <p class="events-eyebrow reveal" style="margin-bottom:18px">What to Wear &amp; What to Know</p>
+    <div class="notes-wrap" id="notes-wrap">
+
+      <!-- Dress code -->
+      <div class="note-card sage">
+        <svg class="note-icon" viewBox="0 0 36 36" fill="none" stroke="var(--sage-dk)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <!-- Elegant dress silhouette -->
+          <path d="M13 4 L10 12 L6 28 L30 28 L26 12 L23 4"/>
+          <path d="M13 4 Q18 8 23 4"/>
+          <path d="M10 12 Q18 16 26 12"/>
+          <circle cx="18" cy="3" r="2"/>
+        </svg>
+        <span class="note-label">Dress Code</span>
+        <div class="note-title">Floral Formal<br>Garden Attire</div>
+        <p class="note-body">
+          We invite you to celebrate in florals, soft pastels, and garden hues. Gentlemen: tailored suits or blazers. Ladies: floral dresses or elegant separates. Avoid white and ivory — those belong to the bride.
+        </p>
+      </div>
+
+      <!-- Terrain note -->
+      <div class="note-card blush">
+        <svg class="note-icon" viewBox="0 0 36 36" fill="none" stroke="var(--rose)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <!-- Grass / terrain icon -->
+          <path d="M4 26 Q8 18 12 20 Q16 22 18 16 Q20 10 22 16 Q24 22 28 18 Q30 16 32 22"/>
+          <line x1="4"  y1="30" x2="32" y2="30"/>
+          <!-- Shoe hint -->
+          <path d="M12 30 Q14 26 18 27 Q22 28 22 30"/>
+        </svg>
+        <span class="note-label">A Gentle Note</span>
+        <div class="note-title">Garden Terrain &amp; Footwear</div>
+        <p class="note-body">
+          The ceremony and reception take place on lush grass and stone terraces. We kindly suggest block heels, wedges, or elegant flats over stilettos. Comfort meets elegance — you'll be dancing all night.
+        </p>
+      </div>
+
+      <!-- Transport note — full width -->
+      <div class="transport-row">
+        <svg class="transport-icon" viewBox="0 0 36 36" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <!-- Bus icon -->
+          <rect x="4" y="8" width="28" height="18" rx="3"/>
+          <line x1="4"  y1="14" x2="32" y2="14"/>
+          <line x1="16" y1="8"  x2="16" y2="26"/>
+          <circle cx="10" cy="28" r="2.5" fill="rgba(184,146,58,.3)" stroke="var(--gold)"/>
+          <circle cx="26" cy="28" r="2.5" fill="rgba(184,146,58,.3)" stroke="var(--gold)"/>
+          <line x1="4"  y1="20" x2="32" y2="20"/>
+        </svg>
+        <div class="transport-text">
+          <span class="note-label">Transport &amp; Parking</span>
+          <div class="note-title" style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--ink);margin-bottom:6px">Complimentary Shuttle Service</div>
+          <p class="note-body">
+            Shuttles depart from Piazza della Repubblica, Florence at 10:00 AM and return at 11:30 PM. Free parking is available on-site for those travelling by car. Please RSVP your transport preference below.
+          </p>
+        </div>
+      </div>
+
+    </div><!-- /notes-wrap -->
+
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery-section">
+    <h2 class="section-heading reveal">Moments We Treasure</h2>
+    <span class="section-sub reveal">Hover each memory · Click to enlarge</span>
+    <div class="polaroid-field" id="polaroid-field"></div>
+  </section>
+
+  <!-- SCRATCH & BLOOM DATE REVEAL -->
+  <section class="reveal-section" id="reveal-section">
+
+    <h2 class="section-heading reveal">Our Sacred Date</h2>
+    <div class="gold-rule reveal" style="max-width:200px;margin:12px auto 28px">
+      <div class="gold-rule-diamond"></div>
+    </div>
+    <span class="reveal-intro reveal">Scratch away the gold foil to uncover our wedding date</span>
+
+    <!-- "We are getting married!" — animated above the card -->
+    <div id="bloom-message" aria-live="polite" aria-label="We are getting married!"></div>
+
+    <!-- Scratch card outer wrapper -->
+    <div class="scratch-outer">
+      <div class="scratch-wrap" id="scratch-wrap">
+
+        <!-- Under-layer: the date, revealed as foil is removed -->
+        <div class="scratch-under" id="scratch-under">
+          <div class="scratch-under-cross">✝</div>
+          <div class="scratch-under-inner-border"></div>
+          <span class="scratch-label">The Wedding Date</span>
+
+          <!-- Vine ornament — vibrant emerald & gold -->
+          <svg class="scratch-vine" width="160" height="18" viewBox="0 0 160 18">
+            <path d="M10,9 Q40,3 80,9 Q120,15 150,9" stroke="rgba(15,64,32,.7)" stroke-width="1.6" fill="none"/>
+            <circle cx="80" cy="9" r="3" fill="rgba(212,175,55,.8)"/>
+            <ellipse cx="40" cy="5"  rx="8" ry="4.5" fill="rgba(15,64,32,.6)" transform="rotate(-18,40,5)"/>
+            <ellipse cx="120" cy="13" rx="8" ry="4.5" fill="rgba(15,64,32,.6)" transform="rotate(18,120,13)"/>
+            <circle cx="22"  cy="4"  r="4" fill="rgba(196,20,80,.65)"/>
+            <circle cx="138" cy="14" r="4" fill="rgba(10,136,120,.65)"/>
+          </svg>
+
+          <div class="scratch-date">14 · VI · 2025</div>
+          <div class="scratch-time">Saturday &nbsp;·&nbsp; 4:00 in the afternoon</div>
+
+          <svg class="scratch-vine" width="100" height="14" viewBox="0 0 100 14" style="opacity:.35">
+            <path d="M5,7 Q25,2 50,7 Q75,12 95,7" stroke="rgba(184,146,58,.6)" stroke-width="1" fill="none"/>
+            <circle cx="50" cy="7" r="2" fill="rgba(184,146,58,.7)"/>
+          </svg>
+
+          <div class="scratch-location">Villa Medicea di Artimino · Tuscany</div>
+        </div>
+
+        <!-- Gold foil canvas overlay -->
+        <canvas id="scratch-canvas" role="img" aria-label="Gold foil scratch area — scratch to reveal the wedding date"></canvas>
+      </div><!-- /scratch-wrap -->
+    </div><!-- /scratch-outer -->
+
+    <!-- Progress bar -->
+    <div class="scratch-progress-bar">
+      <div class="scratch-progress-fill" id="scratch-fill"></div>
+    </div>
+
+    <!-- Hint / status text -->
+    <span class="scratch-hint" id="scratch-hint">✦ &nbsp; scratch to reveal &nbsp; ✦</span>
+
+    <!-- Celebration verse — fades in after reveal -->
+    <p id="reveal-verse">
+      "Two are better than one … <em>if either of them falls,<br>
+      one can help the other up."</em><br>
+      <span style="font-size:.68rem;letter-spacing:.2em;color:var(--gold)">— Ecclesiastes 4:9</span>
+    </p>
+
+  </section>
+
+  <!-- Confetti canvas (fixed, full-screen) -->
+  <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+
+  <!-- RSVP -->
+  <section class="rsvp-section">
+    <div class="rsvp-card reveal">
+      <h2 class="rsvp-heading">Join Us</h2>
+      <span class="rsvp-by">Kindly reply by 1 May 2025</span>
+      <div id="rsvp-form">
+        <div class="rsvp-row">
+          <div class="field-group"><label>First Name</label><input type="text" id="r-fname" placeholder="Your first name"/></div>
+          <div class="field-group"><label>Last Name</label><input type="text" id="r-lname" placeholder="Your last name"/></div>
+        </div>
+        <div class="field-group"><label>Email Address</label><input type="email" id="r-email" placeholder="your@email.com"/></div>
+        <div class="rsvp-row">
+          <div class="field-group">
+            <label>Attending?</label>
+            <select id="r-attend">
+              <option value="">Please select…</option>
+              <option value="yes">Joyfully accepts</option>
+              <option value="no">Regretfully declines</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label>Guests</label>
+            <select id="r-guests">
+              <option value="1">1 guest</option><option value="2">2 guests</option>
+              <option value="3">3 guests</option><option value="4">4 guests</option>
+            </select>
+          </div>
+        </div>
+        <button class="submit-btn" id="rsvp-submit">Confirm RSVP</button>
+      </div>
+      <div class="success-msg" id="rsvp-success">
+        <div class="check">✦</div>
+        <h3>You're on the Guest List</h3>
+        <p>Thank you so much! We'll send a confirmation to your email shortly.<br>We can't wait to celebrate with you in Tuscany.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="inv-footer">
+    <div class="gold-rule" style="max-width:280px;margin:0 auto 28px"><div class="gold-rule-diamond"></div></div>
+    <div class="footer-names">Isabella &amp; Nathaniel</div>
+    <p class="footer-verse">
+      "And now these three remain: faith, hope and love.<br>
+      But the greatest of these is love."<br>
+      <span style="font-size:.78rem;letter-spacing:.15em;color:var(--gold);font-style:normal">— 1 Corinthians 13:13</span>
+    </p>
+    <svg class="footer-cross" width="32" height="40" viewBox="0 0 32 40">
+      <rect x="14" y="0"  width="4" height="40" rx="2" fill="rgba(184,146,58,.55)"/>
+      <rect x="4"  y="10" width="24" height="4"  rx="2" fill="rgba(184,146,58,.55)"/>
+    </svg>
+    <p style="font-size:.54rem;letter-spacing:.28em;text-transform:uppercase;color:var(--ink-lt);opacity:.5;margin-top:20px">Villa Medicea di Artimino · Tuscany · June 2025</p>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     MUSIC PLAYER HUD
+══════════════════════════════════════════════════ -->
+<audio id="bg-music" src="assets/Gehra%20Hua%20-%20Instrumental%20_%20Bgm.mp3" loop hidden preload="auto"></audio>
+<div id="music-hud" class="hidden" role="region" aria-label="Background music player">
+  <div class="music-vinyl" id="music-vinyl"></div>
+  <div class="music-info">
+    <span class="music-title" id="music-title">Gehra Hua</span>
+    <span class="music-artist">Instrumental — Background</span>
+  </div>
+  <div class="music-eq" id="music-eq">
+    <div class="music-eq-bar"></div>
+    <div class="music-eq-bar"></div>
+    <div class="music-eq-bar"></div>
+    <div class="music-eq-bar"></div>
+    <div class="music-eq-bar"></div>
+  </div>
+  <div class="music-controls">
+    <button class="music-btn" id="music-prev" aria-label="Previous track" title="Previous">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg>
+    </button>
+    <button class="music-btn play-pause" id="music-play" aria-label="Play/Pause music" title="Play / Pause">
+      <svg id="play-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      <svg id="pause-icon" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+    </button>
+    <button class="music-btn" id="music-next" aria-label="Next track" title="Next">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zm2-8.14L11.03 12 8 14.14V9.86zM16 6h2v12h-2z"/></svg>
+    </button>
+    <input type="range" class="music-vol" id="music-vol" min="0" max="100" value="40" aria-label="Volume" title="Volume" style="--pct:40%"/>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" style="display:none;position:fixed;inset:0;z-index:200;background:rgba(26,18,10,.92);align-items:center;justify-content:center;backdrop-filter:blur(8px)">
+  <button id="lb-close" style="position:absolute;top:20px;right:24px;background:transparent;border:1px solid rgba(212,175,106,.5);color:var(--gold-lt);width:40px;height:40px;border-radius:50%;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center">✕</button>
+  <div style="text-align:center;max-width:min(90vw,600px)">
+    <canvas id="lb-canvas" width="560" height="560" style="border:14px solid #fff;box-shadow:0 20px 60px rgba(0,0,0,.5);display:block;max-width:100%"></canvas>
+    <p id="lb-caption" style="font-family:'Great Vibes',cursive;font-size:1.6rem;color:var(--gold-lt);margin-top:16px"></p>
+    <p id="lb-desc"    style="font-size:.8rem;color:rgba(255,255,255,.55);margin-top:6px;font-style:italic"></p>
+  </div>
+</div>
+
+<script>
+'use strict';
+gsap.registerPlugin(ScrollTrigger);
+
+/* ══════════════════════════════════════════════════
+   COVER ENVELOPE — cinematic open sequence
+══════════════════════════════════════════════════ */
+const coverEl    = document.getElementById('cover');
+const coverLeft  = document.getElementById('cover-left');
+const coverRight = document.getElementById('cover-right');
+const cvOpenBtn  = document.getElementById('cover-open-btn');
+const gateL      = document.getElementById('gate-left');
+const gateR      = document.getElementById('gate-right');
+const theatre    = document.getElementById('theatre');
+const inv        = document.getElementById('invitation');
+
+/* Keep scrolling locked while cover is up */
+document.body.style.overflow = 'hidden';
+
+/* Set up theatre perspective (needed later) */
+theatre.style.perspective = '1400px';
+/* Theatre starts hidden behind the cover */
+theatre.style.opacity = '0';
+
+/* ── Cover entrance animation (runs immediately on load) ── */
+(function coverEntrance(){
+  const tl = gsap.timeline({ defaults:{ ease:'power3.out' }});
+
+  /* Stagger the cover centre elements up from below */
+  tl.from('#cvMonogram',{ y:30, opacity:0, duration:.7 }, .25)
+    .from('#cvGrace',   { y:20, opacity:0, duration:.6 }, '-=.4')
+    .from(['#cvRule1','#cvRule2'],{ scaleX:0, opacity:0, duration:.5, transformOrigin:'center' }, '-=.3')
+    .from('#cvDate',    { y:14, opacity:0, duration:.5 }, '-=.3')
+    .from('#cvNames',   { y:28, opacity:0, duration:.9, ease:'power4.out' }, '-=.25')
+    .from('#cvSubtitle',{ y:12, opacity:0, duration:.5 }, '-=.35')
+    .from(cvOpenBtn,    { y:18, opacity:0, duration:.6 }, '-=.2');
+})();
+
+/* ── Cover open click ─────────────────────────────────────────
+   ACT 1 → Cover halves split & tilt away (like a luxury box lid)
+   ACT 2 → Theatre (floral arch) fades in behind the gap
+   ACT 3 → Theatre gates swing open  (existing animation)
+   ACT 4 → Invitation page fades in; scroll unlocked
+   ACT 5 → Formal card elements stagger in
+────────────────────────────────────────────────────────────── */
+cvOpenBtn.addEventListener('click', () => {
+  cvOpenBtn.disabled = true;
+
+  const master = gsap.timeline({
+    onComplete: () => {
+      coverEl.style.display = 'none';
+      document.body.style.overflow = '';
+      ScrollTrigger.refresh();
+      initScrollAnimations();
+      initScriptureAnimations();
+      initEventDetailsAnimations();
+      initFormalCardAnimations();
+      if(window._showMusicHud) window._showMusicHud();
+    }
+  });
+
+  /* ACT 1a — Centre content collapses inward (anticipation) */
+  master.to(['#cvNames','#cvGrace','#cvSubtitle','#cvDate','#cvMonogram','#cvRule1','#cvRule2', cvOpenBtn], {
+    opacity: 0, scale: 0.92,
+    duration: .45, ease: 'power2.in', stagger: .03
+  });
+
+  /* ACT 1b — Cover halves tilt open: luxury envelope tear */
+  master.to(coverLeft, {
+    rotateY: -108,
+    x: '-6%',
+    scaleY: 1.03,
+    duration: 1.5,
+    ease: 'power3.inOut',
+    transformOrigin: 'left center',
+    transformStyle: 'preserve-3d',
+  }, '-=.1');
+
+  master.to(coverRight, {
+    rotateY: 108,
+    x: '6%',
+    scaleY: 1.03,
+    duration: 1.5,
+    ease: 'power3.inOut',
+    transformOrigin: 'right center',
+    transformStyle: 'preserve-3d',
+  }, '<');
+
+  /* Flash of light as it opens */
+  master.to(coverEl, {
+    background: 'radial-gradient(ellipse 60% 60% at 50% 50%, rgba(255,252,230,.85) 0%, #f7f3ea 100%)',
+    duration: .3, ease: 'power2.in'
+  }, '-=1.0');
+
+  /* ACT 2 — Theatre reveals from behind, zooms in slightly */
+  master.to(theatre, {
+    opacity: 1,
+    scale: 1,
+    duration: .6,
+    ease: 'power2.out'
+  }, '-=.6');
+
+  /* ACT 2b — Cover fades out fully */
+  master.to(coverEl, {
+    opacity: 0, duration: .4, ease: 'power2.in'
+  }, '-=.35');
+
+  /* ACT 3 — Theatre gates swing open (existing gate animation) */
+  master.to([gateL, gateR], {
+    scaleX: 0.97, duration: .25, ease: 'power2.in'
+  }, '-=.1');
+
+  master.to(gateL, {
+    rotateY: -110, x: '-8%', scaleY: 1.04,
+    duration: 1.35, ease: 'power3.inOut',
+    transformOrigin: 'left center'
+  }, '-=.05');
+
+  master.to(gateR, {
+    rotateY: 110, x: '8%', scaleY: 1.04,
+    duration: 1.35, ease: 'power3.inOut',
+    transformOrigin: 'right center'
+  }, '<');
+
+  master.to(theatre, {
+    opacity: 0, duration: .4, ease: 'power2.in'
+  }, '-=.2');
+
+  /* ACT 4 — Invitation page zooms in from slightly behind */
+  master.fromTo(inv,
+    { opacity: 0, scale: .97 },
+    { opacity: 1, scale: 1,  duration: .7, ease: 'power2.out' },
+    '-=.15'
+  );
+
+  /* After complete, hide theatre */
+  master.call(() => { theatre.style.display = 'none'; });
+});
+
+/* ── Wire the legacy #open-btn inside the theatre so nothing breaks ── */
+/* (The theatre #open-btn is no longer the entry point, but keep
+    it functional in case someone reaches the theatre state directly) */
+const openBtn = document.getElementById('open-btn');
+if (openBtn) {
+  openBtn.addEventListener('click', () => {
+    openBtn.style.pointerEvents = 'none';
+    const tl = gsap.timeline({
+      onComplete: () => {
+        theatre.style.display = 'none';
+        document.body.style.overflow = '';
+        initScrollAnimations();
+        initScriptureAnimations();
+        initEventDetailsAnimations();
+        initFormalCardAnimations();
+      }
+    });
+    tl.to([gateL, gateR], { scaleX:.97, duration:.25, ease:'power2.in' });
+    tl.to(gateL, { rotateY:-110, x:'-8%', scaleY:1.04, duration:1.35, ease:'power3.inOut', transformOrigin:'left center' }, '<0.05');
+    tl.to(gateR, { rotateY: 110, x: '8%', scaleY:1.04, duration:1.35, ease:'power3.inOut', transformOrigin:'right center' }, '<');
+    tl.to(theatre, { opacity:0, duration:.4, ease:'power2.in' }, '-=.2');
+    tl.to(inv,     { opacity:1, duration:.6, ease:'power2.out' }, '-=.15');
+  });
+}
+
+/* ══════════════════════════════════════════════════
+   FORMAL CARD ANIMATIONS
+══════════════════════════════════════════════════ */
+function initFormalCardAnimations() {
+  const card = document.getElementById('formal-card');
+  if (!card) return;
+
+  /* Card itself slides up */
+  gsap.to(card, {
+    opacity: 1, y: 0, scale: 1,
+    duration: 0.9, ease: 'power3.out',
+    scrollTrigger: { trigger: card, start: 'top 85%' },
+  });
+
+  /* Floral wreath scale-in — scales from .92 to 1 */
+  const wreathWrap = document.querySelector('#formal-section .wreath-wrap');
+  if(wreathWrap){
+    gsap.to(wreathWrap, {
+      opacity: 1, scale: 1,
+      duration: 1.1, ease: 'back.out(1.4)',
+      scrollTrigger: { trigger: card, start: 'top 82%', toggleActions: 'play none none none' },
+    });
+  }
+
+  /* Stagger each inner element */
+  const items = [
+    '#fc-grace', '#fc-div1', '#fc-parents', '#fc-request',
+    '#fc-div2', '#fc-names', '#fc-div3', '#fc-details'
+  ];
+  items.forEach((sel, i) => {
+    const el = document.querySelector(sel);
+    if (!el) return;
+    gsap.to(el, {
+      opacity: 1, y: 0,
+      duration: 0.7, ease: 'power2.out',
+      delay: i * 0.1,
+      scrollTrigger: {
+        trigger: card, start: 'top 80%',
+        toggleActions: 'play none none none',
+      },
+    });
+  });
+
+  /* Gold shimmer pass across the couple names */
+  const namesEl = document.getElementById('fc-names');
+  if (namesEl) {
+    ScrollTrigger.create({
+      trigger: namesEl, start: 'top 85%',
+      onEnter: () => {
+        gsap.fromTo(namesEl,
+          { backgroundPosition: '200% center' },
+          { backgroundPosition: '-200% center', duration: 2.5, ease: 'power1.inOut',
+            onStart: () => {
+              namesEl.style.backgroundSize = '300% auto';
+              namesEl.style.transition = 'none';
+            }
+          }
+        );
+      },
+      once: true,
+    });
+  }
+}
+
+/* ══════════════════════════════════════════════════
+   GSAP PARALLAX FLORALS
+══════════════════════════════════════════════════ */
+function initParallax() {
+  const CORNERS = [
+    { sel:'.floral-corner.tl', yFactor:-180, xFactor:-55, base:'scale(1,1)'   },
+    { sel:'.floral-corner.tr', yFactor:-140, xFactor: 50, base:'scaleX(-1)'   },
+    { sel:'.floral-corner.bl', yFactor: 120, xFactor:-40, base:'scaleY(-1)'   },
+    { sel:'.floral-corner.br', yFactor: 100, xFactor: 45, base:'scale(-1,-1)' },
+  ];
+  CORNERS.forEach(({ sel, yFactor, xFactor, base }) => {
+    const el = document.querySelector(sel);
+    if (!el) return;
+    const proxy = { y: 0, x: 0 };
+    ScrollTrigger.create({
+      trigger: document.body,
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: 1.4,
+      onUpdate(self) {
+        proxy.y = self.progress * yFactor;
+        proxy.x = self.progress * xFactor;
+        el.style.transform = `${base} translate(${proxy.x}px,${proxy.y}px)`;
+      },
+    });
+  });
+
+  // Mid-page accent blossoms
+  const ACCENTS = [
+    { top:'520px',  left:'2%',   size:90,  yTravel:-120, xTravel:18  },
+    { top:'520px',  right:'3%',  size:70,  yTravel:-90,  xTravel:-14 },
+    { top:'1100px', left:'1%',   size:80,  yTravel:-110, xTravel:22  },
+    { top:'1100px', right:'2%',  size:65,  yTravel:-80,  xTravel:-18 },
+    { top:'1700px', left:'3%',   size:75,  yTravel:-100, xTravel:15  },
+    { top:'1700px', right:'1%',  size:60,  yTravel:-70,  xTravel:-12 },
+    { top:'2300px', left:'0%',   size:95,  yTravel:-130, xTravel:20  },
+    { top:'2300px', right:'0%',  size:80,  yTravel:-100, xTravel:-16 },
+    { top:'2900px', left:'2%',   size:70,  yTravel:-90,  xTravel:12  },
+    { top:'2900px', right:'2%',  size:85,  yTravel:-110, xTravel:-20 },
+  ];
+
+  const container = document.getElementById('invitation');
+  const petalPalette = [
+    'rgba(201,106,122,.55)',
+    'rgba(155,142,196,.55)',
+    'rgba(212,170,80,.55)',
+  ];
+  const leaf = 'rgba(74,112,80,.45)';
+
+  ACCENTS.forEach((cfg, i) => {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
+    svg.setAttribute('width',  cfg.size);
+    svg.setAttribute('height', cfg.size);
+    svg.setAttribute('viewBox','0 0 100 100');
+    const styles = [
+      'position:absolute',
+      `top:${cfg.top}`,
+      cfg.left  ? `left:${cfg.left}`   : '',
+      cfg.right ? `right:${cfg.right}` : '',
+      'pointer-events:none','z-index:1','will-change:transform','overflow:visible',
+    ].filter(Boolean).join(';');
+    svg.style.cssText = styles;
+
+    const petal = petalPalette[i % 3];
+    svg.innerHTML = `
+      <ellipse cx="50" cy="30" rx="14" ry="26" fill="${petal}" opacity=".75" transform="rotate(0 50 50)"/>
+      <ellipse cx="50" cy="30" rx="14" ry="26" fill="${petal}" opacity=".65" transform="rotate(60 50 50)"/>
+      <ellipse cx="50" cy="30" rx="14" ry="26" fill="${petal}" opacity=".65" transform="rotate(120 50 50)"/>
+      <ellipse cx="50" cy="30" rx="14" ry="26" fill="${petal}" opacity=".7"  transform="rotate(180 50 50)"/>
+      <ellipse cx="50" cy="30" rx="14" ry="26" fill="${petal}" opacity=".6"  transform="rotate(240 50 50)"/>
+      <ellipse cx="50" cy="30" rx="14" ry="26" fill="${petal}" opacity=".6"  transform="rotate(300 50 50)"/>
+      <circle cx="50" cy="50" r="9" fill="rgba(240,200,100,.8)"/>
+      <circle cx="50" cy="50" r="5" fill="rgba(255,230,130,.9)"/>
+      <ellipse cx="22" cy="62" rx="10" ry="5" fill="${leaf}" transform="rotate(-40 22 62)" opacity=".8"/>
+      <ellipse cx="78" cy="62" rx="10" ry="5" fill="${leaf}" transform="rotate(40 78 62)"  opacity=".8"/>
+    `;
+    container.appendChild(svg);
+
+    gsap.to(svg, {
+      y: cfg.yTravel, x: cfg.xTravel, ease: 'none',
+      scrollTrigger: {
+        trigger: svg, start: 'top bottom', end: 'bottom top',
+        scrub: 2.2, invalidateOnRefresh: true,
+      },
+    });
+    gsap.to(svg, {
+      rotation: (i % 2 === 0 ? 1 : -1) * 14,
+      duration: 5 + i * 0.4, repeat: -1, yoyo: true, ease: 'sine.inOut',
+    });
+  });
+}
+initParallax();
+
+/* ══════════════════════════════════════════════════
+   SCROLL REVEALS (called after theatre closes)
+══════════════════════════════════════════════════ */
+function initScrollAnimations() {
+  document.querySelectorAll('.reveal').forEach(el => {
+    gsap.to(el, {
+      opacity: 1, y: 0, duration: 0.9, ease: 'power3.out',
+      scrollTrigger: {
+        trigger: el, start: 'top 88%',
+        toggleActions: 'play none none none',
+      },
+    });
+  });
+}
+
+/* ══════════════════════════════════════════════════
+   SCRIPTURE STANZA ANIMATIONS (called after theatre)
+══════════════════════════════════════════════════ */
+function initScriptureAnimations() {
+  const card = document.getElementById('scripture-card');
+
+  // Main card reveal
+  gsap.to(card, {
+    opacity: 1, y: 0, duration: 1, ease: 'power3.out',
+    scrollTrigger: { trigger: card, start: 'top 82%' },
+  });
+
+  // Stagger each verse stanza
+  const stanzas = ['#st1','#st2','#st3','#st4','#st5'];
+  stanzas.forEach((id, i) => {
+    gsap.to(id, {
+      opacity: 1, y: 0, duration: 0.75, ease: 'power2.out',
+      delay: i * 0.12,
+      scrollTrigger: {
+        trigger: card, start: 'top 75%',
+        toggleActions: 'play none none none',
+      },
+    });
+  });
+
+  // Keystone verse — slight extra delay + scale-up
+  gsap.to('#keystone', {
+    opacity: 1, y: 0, duration: 1, ease: 'power3.out',
+    delay: 0.65,
+    scrollTrigger: { trigger: card, start: 'top 72%' },
+  });
+
+  // Extra cards — stagger with slight y offset
+  ['#ec1','#ec2','#ec3','#ec4'].forEach((id, i) => {
+    gsap.to(id, {
+      opacity: 1, y: 0, duration: 0.7, ease: 'power2.out',
+      delay: i * 0.1,
+      scrollTrigger: {
+        trigger: '#scripture-extra', start: 'top 85%',
+        toggleActions: 'play none none none',
+      },
+    });
+  });
+
+  // Gold-phrase shimmer: stagger animation-delay via JS so
+  // each phrase starts glowing at a different time
+  document.querySelectorAll('.gold-phrase').forEach((el, i) => {
+    el.style.animationDelay = (i * 0.9) + 's';
+  });
+}
+
+/* ══════════════════════════════════════════════════
+   EVENT DETAILS ANIMATIONS
+══════════════════════════════════════════════════ */
+function initEventDetailsAnimations() {
+
+  /* ── 1. Build the living vine SVG axis ─────────────────────────
+     The vine is drawn as a single SVG inside #vine-axis.
+     It consists of:
+       • A main vertical stem path (dashed, stroke-dashoffset animated)
+       • Organic side tendrils branching left and right
+       • Leaf pairs along the stem
+       • Small rose circles at each event node's Y position
+     The stem animates via ScrollTrigger scrub — drawing itself
+     as the user scrolls down, so the vine "grows" in real time.
+  ─────────────────────────────────────────────────────────────── */
+  const wrap   = document.getElementById('timeline-wrap');
+  const axisEl = document.getElementById('vine-axis');
+
+  // Measure after layout
+  const wrapH = wrap.offsetHeight;
+  axisEl.setAttribute('viewBox', `0 0 60 ${wrapH}`);
+  axisEl.style.height = wrapH + 'px';
+
+  // Vertical stem — slightly wavy
+  const midX = 30;
+  const stemPath = `M${midX},20
+    C${midX+4},${wrapH*0.18} ${midX-4},${wrapH*0.32} ${midX},${wrapH*0.44}
+    C${midX+5},${wrapH*0.56} ${midX-3},${wrapH*0.70} ${midX},${wrapH*0.82}
+    C${midX+4},${wrapH*0.91} ${midX-2},${wrapH*0.97} ${midX},${wrapH-20}`;
+
+  const stem = document.createElementNS('http://www.w3.org/2000/svg','path');
+  stem.setAttribute('d', stemPath);
+  stem.setAttribute('stroke', 'rgba(74,112,80,.55)');
+  stem.setAttribute('stroke-width', '1.8');
+  stem.setAttribute('fill', 'none');
+  stem.setAttribute('stroke-linecap', 'round');
+  stem.classList.add('vine-path');
+  const stemLen = 2000; // generous over-estimate
+  stem.style.strokeDasharray  = stemLen;
+  stem.style.strokeDashoffset = stemLen;
+  axisEl.appendChild(stem);
+
+  // Tendrils branching at intervals
+  const tendrilData = [
+    { y: wrapH*0.14, dir:-1, len:18 },
+    { y: wrapH*0.22, dir: 1, len:14 },
+    { y: wrapH*0.38, dir:-1, len:16 },
+    { y: wrapH*0.46, dir: 1, len:20 },
+    { y: wrapH*0.62, dir:-1, len:15 },
+    { y: wrapH*0.70, dir: 1, len:18 },
+    { y: wrapH*0.85, dir:-1, len:14 },
+    { y: wrapH*0.92, dir: 1, len:16 },
+  ];
+
+  tendrilData.forEach(({ y, dir, len }) => {
+    const t = document.createElementNS('http://www.w3.org/2000/svg','path');
+    const ex = midX + dir * len;
+    const ey = y - 10 + Math.random() * 20;
+    t.setAttribute('d', `M${midX},${y} Q${midX + dir*len*0.6},${y-8} ${ex},${ey}`);
+    t.setAttribute('stroke', 'rgba(74,112,80,.38)');
+    t.setAttribute('stroke-width', '1');
+    t.setAttribute('fill', 'none');
+    t.setAttribute('stroke-linecap', 'round');
+    t.classList.add('vine-path');
+    t.style.strokeDasharray  = 60;
+    t.style.strokeDashoffset = 60;
+    axisEl.appendChild(t);
+
+    // Leaf at tendril tip
+    const leaf = document.createElementNS('http://www.w3.org/2000/svg','ellipse');
+    leaf.setAttribute('cx', ex);
+    leaf.setAttribute('cy', ey);
+    leaf.setAttribute('rx', 7 + Math.random()*3);
+    leaf.setAttribute('ry', 3.5 + Math.random()*1.5);
+    leaf.setAttribute('fill', 'rgba(74,112,80,.4)');
+    leaf.setAttribute('transform', `rotate(${dir*-35} ${ex} ${ey})`);
+    leaf.style.opacity = 0;
+    axisEl.appendChild(leaf);
+
+    // Animate leaf after vine draws
+    gsap.to(leaf, {
+      opacity: 1, duration: 0.4, ease: 'power2.out',
+      scrollTrigger: {
+        trigger: wrap,
+        start: `top+=${y * 0.6} center`,
+        toggleActions: 'play none none none',
+      },
+    });
+
+    // Animate tendril via stroke-dashoffset
+    gsap.to(t, {
+      strokeDashoffset: 0, ease: 'none',
+      scrollTrigger: {
+        trigger: wrap,
+        start: `top+=${y * 0.55} center`,
+        end:   `top+=${y * 0.8}  center`,
+        scrub: 1,
+      },
+    });
+  });
+
+  // Rose dots along stem at each event Y position
+  // We'll add them after bloom positions are known
+  const roseColors = [
+    'rgba(201,106,122,.7)',
+    'rgba(183,166,220,.7)',
+    'rgba(255,180,100,.7)',
+    'rgba(201,106,122,.7)',
+  ];
+
+  // Small bougainvillea petals scattered along stem
+  const petalPositions = [0.2, 0.35, 0.55, 0.72, 0.88];
+  petalPositions.forEach((frac, i) => {
+    const py = wrapH * frac;
+    const px = midX + (i%2===0 ? -1:1) * (8 + Math.random()*6);
+    const petal = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    petal.setAttribute('cx', px);
+    petal.setAttribute('cy', py);
+    petal.setAttribute('r', 4 + Math.random()*2);
+    petal.setAttribute('fill', roseColors[i % roseColors.length]);
+    petal.style.opacity = 0;
+    axisEl.appendChild(petal);
+    gsap.to(petal, {
+      opacity: 1, duration: 0.5, ease: 'power2.out',
+      scrollTrigger: {
+        trigger: wrap,
+        start: `top+=${py*0.65} center`,
+        toggleActions: 'play none none none',
+      },
+    });
+  });
+
+  // ── Animate the main stem via scrub ──────────────────────────
+  gsap.to(stem, {
+    strokeDashoffset: 0,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: wrap,
+      start: 'top 70%',
+      end: 'bottom 70%',
+      scrub: 1.2,
+    },
+  });
+
+  /* ── 2. Timeline event cards & bloom nodes ──────────────────── */
+  document.querySelectorAll('.tl-event').forEach((row, i) => {
+    const card  = row.querySelector('.tl-content');
+    const bloom = row.querySelector('.tl-bloom');
+    const isLeft = row.classList.contains('left');
+
+    // Card slides in from its side
+    gsap.fromTo(card,
+      { opacity: 0, x: isLeft ? -40 : 40 },
+      {
+        opacity: 1, x: 0,
+        duration: 0.8, ease: 'power3.out',
+        scrollTrigger: {
+          trigger: row, start: 'top 80%',
+          toggleActions: 'play none none none',
+        },
+      }
+    );
+
+    // Bloom node pops in with a spring
+    gsap.to(bloom, {
+      opacity: 1, scale: 1,
+      duration: 0.6, ease: 'back.out(1.8)',
+      delay: 0.15,
+      scrollTrigger: {
+        trigger: row, start: 'top 78%',
+        toggleActions: 'play none none none',
+      },
+    });
+
+    // Tiny floral burst around bloom on scroll-in
+    const burstColors = ['rgba(201,106,122,.65)','rgba(183,166,220,.6)','rgba(255,200,100,.65)'];
+    for (let p = 0; p < 6; p++) {
+      const angle = (p / 6) * Math.PI * 2;
+      const burst = document.createElementNS('http://www.w3.org/2000/svg','circle');
+      burst.setAttribute('r', '4');
+      burst.setAttribute('fill', burstColors[p % 3]);
+      burst.style.cssText = 'position:absolute;pointer-events:none';
+      axisEl.appendChild(burst);
+      // position relative to vine axis — will be updated on scroll trigger fire
+      const rowRect = row.getBoundingClientRect();
+      const wrapRect = wrap.getBoundingClientRect();
+      const relY = rowRect.top - wrapRect.top + rowRect.height * 0.5;
+      burst.setAttribute('cx', midX + Math.cos(angle) * 0);
+      burst.setAttribute('cy', relY);
+      burst.style.opacity = 0;
+      gsap.to(burst, {
+        opacity: 0, duration: 0.5, ease: 'power2.out',
+        cx: midX + Math.cos(angle) * 18,
+        cy: relY  + Math.sin(angle) * 18,
+        scrollTrigger: {
+          trigger: row, start: 'top 78%',
+          toggleActions: 'play none none none',
+          onEnter: () => {
+            burst.style.opacity = '1';
+            gsap.fromTo(burst,
+              { opacity: 1 },
+              { opacity: 0, duration: 0.8, ease: 'power2.out', delay: 0.3 }
+            );
+          },
+        },
+      });
+    }
+  });
+
+  /* ── 3. Venue card ──────────────────────────────────────────── */
+  // Already has .reveal class for base animation; add extra lift
+  const venueCard = document.getElementById('venue-card');
+  ScrollTrigger.create({
+    trigger: venueCard, start: 'top 82%',
+    onEnter: () => {
+      gsap.to(venueCard, { opacity:1, y:0, duration:0.9, ease:'power3.out' });
+    },
+  });
+
+  /* ── 4. Notes cards ─────────────────────────────────────────── */
+  const notesWrap = document.getElementById('notes-wrap');
+  gsap.to(notesWrap, {
+    opacity: 1, y: 0, duration: 0.8, ease: 'power3.out',
+    scrollTrigger: { trigger: notesWrap, start: 'top 85%' },
+  });
+  notesWrap.querySelectorAll('.note-card, .transport-row').forEach((card, i) => {
+    gsap.fromTo(card,
+      { opacity: 0, y: 20 },
+      {
+        opacity: 1, y: 0, duration: 0.65, ease: 'power2.out',
+        delay: i * 0.1,
+        scrollTrigger: { trigger: notesWrap, start: 'top 82%', toggleActions: 'play none none none' },
+      }
+    );
+  });
+}
+
+/* ══════════════════════════════════════════════════
+   POLAROID GALLERY  —  Responsive masonry + rich canvas art
+══════════════════════════════════════════════════ */
+
+/* ── Rich watercolour-style canvas image generator ── */
+function generateMemoryCanvas(mem, size) {
+  const c = document.createElement('canvas');
+  c.width = c.height = size;
+  const ctx = c.getContext('2d');
+  const W = size, H = size;
+  const [c1, c2, c3] = mem.palette;
+
+  /* ── Background wash ── */
+  const bg = ctx.createLinearGradient(0, 0, W, H);
+  bg.addColorStop(0, c1);
+  bg.addColorStop(.55, c2);
+  bg.addColorStop(1, c3 || c1);
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  /* ── Watercolour bloom puddles ── */
+  ctx.globalAlpha = .18;
+  for (let i = 0; i < 14; i++) {
+    const rx = 18 + Math.random() * 70;
+    const ry = 14 + Math.random() * 55;
+    const gx = ctx.createRadialGradient(
+      Math.random()*W, Math.random()*H, 0,
+      Math.random()*W, Math.random()*H, rx
+    );
+    gx.addColorStop(0, 'rgba(255,255,255,.55)');
+    gx.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.fillStyle = gx;
+    ctx.beginPath();
+    ctx.ellipse(Math.random()*W, Math.random()*H, rx, ry, Math.random()*Math.PI, 0, Math.PI*2);
+    ctx.fill();
+  }
+
+  /* ── Dark blobs for depth (pigment pools) ── */
+  ctx.globalAlpha = .10;
+  for (let i = 0; i < 6; i++) {
+    const r = 15 + Math.random()*40;
+    const gx = ctx.createRadialGradient(
+      Math.random()*W, Math.random()*H, 0,
+      Math.random()*W, Math.random()*H, r
+    );
+    gx.addColorStop(0, 'rgba(44,35,24,.6)');
+    gx.addColorStop(1, 'rgba(44,35,24,0)');
+    ctx.fillStyle = gx;
+    ctx.beginPath();
+    ctx.arc(Math.random()*W, Math.random()*H, r, 0, Math.PI*2);
+    ctx.fill();
+  }
+  ctx.globalAlpha = 1;
+
+  /* ── Scene-specific painting per memory ── */
+  ctx.save();
+  mem.painter(ctx, W, H);
+  ctx.restore();
+
+  /* ── Paper texture overlay ── */
+  ctx.globalAlpha = .06;
+  for (let y = 0; y < H; y += 3) {
+    ctx.fillStyle = y%6===0
+      ? 'rgba(200,180,140,.5)'
+      : 'rgba(255,255,255,.3)';
+    ctx.fillRect(0, y, W, 1);
+  }
+  ctx.globalAlpha = 1;
+
+  /* ── Vignette ── */
+  const vig = ctx.createRadialGradient(W/2, H/2, H*.2, W/2, H/2, H*.75);
+  vig.addColorStop(0, 'rgba(0,0,0,0)');
+  vig.addColorStop(1, 'rgba(0,0,0,.42)');
+  ctx.fillStyle = vig;
+  ctx.fillRect(0, 0, W, H);
+
+  /* ── Elegant title label ── */
+  ctx.fillStyle = 'rgba(255,252,240,.9)';
+  ctx.font = `italic ${Math.round(H/12)}px 'Cormorant Garamond',serif`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  // soft shadow
+  ctx.shadowColor = 'rgba(0,0,0,.5)';
+  ctx.shadowBlur = 8;
+  ctx.fillText(mem.title, W/2, H*.82);
+  ctx.shadowBlur = 0;
+
+  // gold underline below title
+  const tw = ctx.measureText(mem.title).width;
+  ctx.strokeStyle = 'rgba(212,175,106,.7)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(W/2 - tw/2, H*.87);
+  ctx.lineTo(W/2 + tw/2, H*.87);
+  ctx.stroke();
+
+  return c;
+}
+
+/* ── Moments We Treasure: real photos in sequence order ── */
+/* ── Moments We Treasure: 8 real photos in sequence order ── */
+const MEMORIES = [
+  { title:'First Meeting',    src:'assets/g1.jpg',   rot:-6 },
+  { title:'The Proposal',     src:'assets/g2.jpg',   rot: 5 },
+  { title:'Engagement',       src:'assets/g3.jpg',   rot:-4 },
+  { title:'Family Day',       src:'assets/g4.jpg',   rot: 7 },
+  { title:'The Dress',        src:'assets/g5.jpg',   rot:-5 },
+  { title:'Garden Walk',      src:'assets/g6.jpg',   rot: 6 },
+  { title:'Our First Dance',  src:'assets/g7.jpg',   rot:-3 },
+  { title:'Our Home',         src:'assets/g8.jpg',   rot: 4 },
+];
+
+
+const field = document.getElementById('polaroid-field');
+const tilts = [-6,-3,5,-4,7,-5,4,-6]; // static tilts per card
+
+/* ── Build each polaroid with a real photo ── */
+MEMORIES.forEach((mem, i) => {
+  const pol = document.createElement('div');
+  pol.className = 'polaroid';
+  pol.style.transform = `rotate(${tilts[i]}deg)`;
+  pol.setAttribute('tabindex','0');
+  pol.setAttribute('role','button');
+  pol.setAttribute('aria-label', mem.title);
+
+  const pd = document.createElement('div');
+  pd.className = 'polaroid-photo';
+
+  /* Real image instead of canvas */
+  const img = document.createElement('img');
+  img.src = mem.src;
+  img.alt = mem.title;
+  img.loading = 'lazy';
+  img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease';
+  pd.appendChild(img);
+
+  const cap = document.createElement('div');
+  cap.className = 'polaroid-caption';
+  cap.textContent = mem.title;
+
+  pol.appendChild(pd);
+  pol.appendChild(cap);
+  field.appendChild(pol);
+
+  /* 3D hover tilt */
+  pol.addEventListener('mouseenter', () => {
+    gsap.to(pol, {
+      y: -16, rotateX: 7, rotateZ: tilts[i] * 0.25,
+      scale: 1.06, zIndex: 100,
+      duration: .38, ease: 'power2.out',
+      boxShadow: '0 26px 52px rgba(44,35,24,.26)',
+    });
+    gsap.to(img, { scale: 1.07, duration: .4, ease: 'power2.out' });
+  });
+  pol.addEventListener('mouseleave', () => {
+    gsap.to(pol, {
+      y: 0, rotateX: 0, rotateZ: tilts[i],
+      scale: 1, zIndex: 10,
+      duration: .45, ease: 'power3.out',
+      boxShadow: '0 6px 28px rgba(44,35,24,.13)',
+    });
+    gsap.to(img, { scale: 1, duration: .5, ease: 'power3.out' });
+  });
+  pol.addEventListener('touchstart', () => {
+    gsap.to(pol, { y:-10, scale:1.05, zIndex:100, duration:.3, ease:'power2.out' });
+  }, {passive:true});
+  pol.addEventListener('touchend', () => {
+    gsap.to(pol, { y:0, scale:1, zIndex:10, duration:.4, ease:'power3.out' });
+  });
+
+  /* Click / Enter → lightbox */
+  const openLbFn = () => openLightbox(mem);
+  pol.addEventListener('click', openLbFn);
+  pol.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' ') openLbFn(); });
+
+  /* Scroll reveal — staggered */
+  gsap.from(pol, {
+    opacity: 0,
+    y: 36,
+    rotate: tilts[i] - 5,
+    duration: .75,
+    ease: 'power3.out',
+    delay: (i % 4) * 0.08,
+    scrollTrigger: { trigger: field, start: 'top 82%' },
+  });
+});
+
+/* ── Lightbox ── */
+const lightbox = document.getElementById('lightbox');
+const lbCanvas = document.getElementById('lb-canvas');
+const lbCap    = document.getElementById('lb-caption');
+const lbDesc   = document.getElementById('lb-desc');
+const lbClose  = document.getElementById('lb-close');
+
+function openLightbox(mem){
+  /* Swap canvas for a real img if not already done */
+  let lbImg = document.getElementById('lb-real-img');
+  if (!lbImg) {
+    lbImg = document.createElement('img');
+    lbImg.id = 'lb-real-img';
+    lbImg.style.cssText = 'max-width:min(90vw,600px);max-height:80vh;object-fit:contain;display:block;border:14px solid #fff;box-shadow:0 20px 60px rgba(0,0,0,.5);margin:0 auto';
+    lbCanvas.parentNode.insertBefore(lbImg, lbCanvas);
+    lbCanvas.style.display = 'none';
+  }
+  lbImg.src = mem.src;
+  lbImg.alt = mem.title;
+  lbCap.textContent  = mem.title;
+  lightbox.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+  gsap.fromTo(lightbox, { opacity:0 }, { opacity:1, duration:.35 });
+}
+function closeLightbox(){
+  gsap.to(lightbox, { opacity:0, duration:.25, onComplete:()=>{
+    lightbox.style.display = 'none';
+    document.body.style.overflow = '';
+  }});
+}
+lbClose.addEventListener('click', closeLightbox);
+lightbox.addEventListener('click', e => { if(e.target===lightbox) closeLightbox(); });
+document.addEventListener('keydown', e => {
+  if(e.key==='Escape') closeLightbox();
+});
+
+/* ══════════════════════════════════════════════════
+   BACKGROUND MUSIC PLAYER
+   Uses the local MP3 file instead of synthesis.
+══════════════════════════════════════════════════ */
+const musicHud    = document.getElementById('music-hud');
+const bgMusic     = document.getElementById('bg-music');
+const musicPlay   = document.getElementById('music-play');
+const playIcon    = document.getElementById('play-icon');
+const pauseIcon   = document.getElementById('pause-icon');
+const musicPrev   = document.getElementById('music-prev');
+const musicNext   = document.getElementById('music-next');
+const musicVol    = document.getElementById('music-vol');
+const musicTitle  = document.getElementById('music-title');
+const musicVinyl  = document.getElementById('music-vinyl');
+const musicEq     = document.getElementById('music-eq');
+
+let isPlaying = false;
+
+/* Initial volume set */
+bgMusic.volume = musicVol.value / 100 * 0.5; // gentle start
+
+function setPlayState(playing){
+  isPlaying = playing;
+  playIcon.style.display  = playing ? 'none'  : '';
+  pauseIcon.style.display = playing ? ''      : 'none';
+  musicVinyl.classList.toggle('spinning', playing);
+  musicEq.classList.toggle('paused', !playing);
+}
+
+function toggleMusic(){
+  if(bgMusic.paused){
+    bgMusic.play().then(() => setPlayState(true)).catch(e => console.log('Autoplay blocked', e));
+  } else {
+    bgMusic.pause();
+    setPlayState(false);
+  }
+}
+
+/* Show the HUD and start music after the cover opens */
+function showMusicHud(){
+  musicHud.classList.remove('hidden');
+  gsap.fromTo(musicHud,
+    { opacity:0, y:20 },
+    { opacity:1, y:0, duration:.7, ease:'power3.out', delay:.8 }
+  );
+  // Start the music immediately when HUD shows
+  bgMusic.play().then(() => setPlayState(true)).catch(e => console.log('Autoplay blocked', e));
+}
+
+musicPlay.addEventListener('click', toggleMusic);
+
+/* Since we only have one track, prev/next just restart it for now */
+musicPrev.addEventListener('click', () => { bgMusic.currentTime = 0; if(!isPlaying) toggleMusic(); });
+musicNext.addEventListener('click', () => { bgMusic.currentTime = 0; if(!isPlaying) toggleMusic(); });
+
+musicVol.addEventListener('input', function(){
+  const v = this.value;
+  this.style.setProperty('--pct', v + '%');
+  bgMusic.volume = (v / 100) * 0.8;
+});
+
+/* Expose showMusicHud so it can be called after cover opens */
+window._showMusicHud = showMusicHud;
+
+/* ══════════════════════════════════════════════════
+   SCRATCH & BLOOM  —  Full Engine
+   ─────────────────────────────────────────────────
+   • Gold foil rendered as a heart-clipped gradient
+     with shine lines and texture
+   • Scrub with destination-out circles (mouse + touch)
+   • Pixel-sampling every 120ms for performance
+   • On 60% clear:
+     1. "Handwritten" bloom-in per-letter animation
+     2. Full gold foil sweeps off
+     3. Confetti particle burst (sage + gold)
+     4. Celebration verse fades in
+══════════════════════════════════════════════════ */
+
+const scratchCanvas  = document.getElementById('scratch-canvas');
+const scratchCtx     = scratchCanvas.getContext('2d');
+const scratchWrap    = document.getElementById('scratch-wrap');
+const scratchFill    = document.getElementById('scratch-fill');
+const scratchHint    = document.getElementById('scratch-hint');
+const bloomMsg       = document.getElementById('bloom-message');
+const revealVerse    = document.getElementById('reveal-verse');
+const confettiCanvas = document.getElementById('confetti-canvas');
+const confettiCtx    = confettiCanvas.getContext('2d');
+
+/* ── 1. Build the gold foil canvas ── */
+function drawGoldFoil(){
+  const W = scratchWrap.offsetWidth;
+  const H = scratchWrap.offsetHeight;
+  scratchCanvas.width  = W;
+  scratchCanvas.height = H;
+
+  /* ── Heart clip path centred in canvas ── */
+  function heartPath(ctx, cx, cy, size){
+    const s = size;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy + s * 0.35);
+    ctx.bezierCurveTo(cx,         cy,          cx - s*.55, cy - s*.38, cx - s*.55, cy - s*.12);
+    ctx.bezierCurveTo(cx - s*.55, cy + s*.18,  cx,         cy + s*.55, cx,         cy + s*.75);
+    ctx.bezierCurveTo(cx,         cy + s*.55,  cx + s*.55, cy + s*.18, cx + s*.55, cy - s*.12);
+    ctx.bezierCurveTo(cx + s*.55, cy - s*.38,  cx,         cy,         cx,         cy + s*.35);
+    ctx.closePath();
+  }
+
+  /* ── Fill entire canvas first with a dark backing so heart edges read ── */
+  scratchCtx.fillStyle = '#c89010';
+  scratchCtx.fillRect(0, 0, W, H);
+
+  /* ── Clip to heart ── */
+  scratchCtx.save();
+  heartPath(scratchCtx, W/2, H/2, Math.min(W, H) * 0.74);
+  scratchCtx.clip();
+
+  /* ── Rich sun-gold 9-stop gradient ── */
+  const grad = scratchCtx.createLinearGradient(0, 0, W, H);
+  grad.addColorStop(0.00, '#6a3c00');
+  grad.addColorStop(0.08, '#d4950a');
+  grad.addColorStop(0.18, '#ffe060');
+  grad.addColorStop(0.28, '#c08010');
+  grad.addColorStop(0.40, '#f0d040');
+  grad.addColorStop(0.52, '#d4af37');
+  grad.addColorStop(0.65, '#fff090');
+  grad.addColorStop(0.78, '#c89010');
+  grad.addColorStop(0.90, '#e8c840');
+  grad.addColorStop(1.00, '#7a4800');
+  scratchCtx.fillStyle = grad;
+  scratchCtx.fillRect(0, 0, W, H);
+
+  /* ── Bright vertical shimmer lines ── */
+  scratchCtx.globalAlpha = 0.18;
+  for(let x = 0; x < W; x += 3){
+    scratchCtx.strokeStyle = x % 9 === 0
+      ? 'rgba(255,255,200,.8)'
+      : 'rgba(160,100,0,.35)';
+    scratchCtx.lineWidth = 0.8;
+    scratchCtx.beginPath();
+    scratchCtx.moveTo(x, 0);
+    scratchCtx.lineTo(x, H);
+    scratchCtx.stroke();
+  }
+
+  /* ── Diagonal specular highlight ── */
+  scratchCtx.globalAlpha = 0.28;
+  const sweep = scratchCtx.createLinearGradient(0, 0, W * 0.65, H * 0.65);
+  sweep.addColorStop(0,    'rgba(255,255,210,.75)');
+  sweep.addColorStop(0.35, 'rgba(255,240,180,.25)');
+  sweep.addColorStop(1,    'rgba(255,240,180,0)');
+  scratchCtx.fillStyle = sweep;
+  scratchCtx.fillRect(0, 0, W, H);
+
+  /* ── Heart outline glow (inner) ── */
+  scratchCtx.globalAlpha = 0.35;
+  scratchCtx.strokeStyle = 'rgba(255,240,140,.9)';
+  scratchCtx.lineWidth = 3;
+  heartPath(scratchCtx, W/2, H/2, Math.min(W, H) * 0.68);
+  scratchCtx.stroke();
+
+  /* ── "Scratch here" label in centre ── */
+  scratchCtx.globalAlpha = 0.65;
+  scratchCtx.fillStyle   = 'rgba(80,40,0,.8)';
+  scratchCtx.font        = `italic ${Math.round(H / 10)}px 'Cormorant Garamond', serif`;
+  scratchCtx.textAlign   = 'center';
+  scratchCtx.textBaseline = 'middle';
+  scratchCtx.fillText('✦  scratch to reveal  ✦', W / 2, H / 2 + H * 0.24);
+
+  scratchCtx.globalAlpha = 1;
+  scratchCtx.restore();
+
+  /* ── Outer heart stroke (visible outside clip) ── */
+  scratchCtx.save();
+  scratchCtx.strokeStyle = 'rgba(212,175,55,.5)';
+  scratchCtx.lineWidth = 2;
+  heartPath(scratchCtx, W/2, H/2, Math.min(W, H) * 0.74);
+  scratchCtx.stroke();
+  scratchCtx.restore();
+}
+
+function initScratch(){
+  /* Ensure the wrap has measured height before drawing */
+  requestAnimationFrame(()=>{
+    drawGoldFoil();
+    totalPixels = 0; // force recount on next calcPct
+  });
+}
+initScratch();
+window.addEventListener('resize', ()=>{ if(!revealed) initScratch(); });
+
+/* ── 2. Scratch mechanics ── */
+let isScratching = false;
+let totalPixels  = 0;
+let revealed     = false;
+let lastPctCheck = 0;
+const RADIUS     = 30;
+
+function getPos(e, canvas){
+  const r = canvas.getBoundingClientRect();
+  const src = e.touches ? e.touches[0] : e;
+  return { x: src.clientX - r.left, y: src.clientY - r.top };
+}
+
+function scratch(x, y){
+  scratchCtx.globalCompositeOperation = 'destination-out';
+  scratchCtx.beginPath();
+  scratchCtx.arc(x, y, RADIUS, 0, Math.PI * 2);
+  scratchCtx.fill();
+  scratchCtx.globalCompositeOperation = 'source-over';
+}
+
+/* Pixel counting throttled to every 120ms for performance */
+function calcPct(){
+  const now = Date.now();
+  if(now - lastPctCheck < 120) return;
+  lastPctCheck = now;
+
+  const W = scratchCanvas.width, H = scratchCanvas.height;
+  if(!totalPixels) totalPixels = W * H;
+
+  const data    = scratchCtx.getImageData(0, 0, W, H).data;
+  let   cleared = 0;
+  for(let i = 3; i < data.length; i += 4) if(data[i] < 128) cleared++;
+
+  const pct = Math.round((cleared / totalPixels) * 100);
+  scratchFill.style.width = Math.min(pct, 100) + '%';
+
+  /* Update hint text as progress grows */
+  if(pct > 20 && pct < 60 && !revealed){
+    scratchHint.textContent = `${pct}% revealed — keep going…`;
+  }
+
+  if(pct >= 60 && !revealed){
+    revealed = true;
+    triggerReveal();
+  }
+}
+
+/* ── 3. Scratch event listeners ── */
+scratchCanvas.addEventListener('mousedown',   e => { isScratching = true;  const p = getPos(e, scratchCanvas); scratch(p.x, p.y); });
+scratchCanvas.addEventListener('mousemove',   e => { if(!isScratching) return; const p = getPos(e, scratchCanvas); scratch(p.x, p.y); calcPct(); });
+scratchCanvas.addEventListener('mouseup',     () => isScratching = false);
+scratchCanvas.addEventListener('mouseleave',  () => isScratching = false);
+scratchCanvas.addEventListener('touchstart',  e => { e.preventDefault(); isScratching = true;  const p = getPos(e, scratchCanvas); scratch(p.x, p.y); }, { passive: false });
+scratchCanvas.addEventListener('touchmove',   e => { e.preventDefault(); if(!isScratching) return; const p = getPos(e, scratchCanvas); scratch(p.x, p.y); calcPct(); }, { passive: false });
+scratchCanvas.addEventListener('touchend',    () => isScratching = false);
+
+/* ── 4. REVEAL SEQUENCE  ─────────────────────────────────────────
+   Orchestrated as a GSAP master timeline so every beat is locked
+   to the same clock.  Acts:
+   A  Foil sweeps away          (0.0 s)
+   B  Scratch section glows     (0.3 s)
+   C  Letters bloom in stagger  (0.5 s)  ← grand announcement
+   D  Message pulses & settles  (1.6 s)
+   E  First confetti wave       (0.4 s)
+   F  Verse fades up            (1.8 s)
+   G  Second confetti wave      (2.2 s)
+   H  Hint text updates         (0.0 s)
+─────────────────────────────────────────────────────────────── */
+function triggerReveal(){
+  const REVEAL_MSG = 'We are getting married!';
+
+  /* ── Make parent container fully visible immediately ── */
+  bloomMsg.style.opacity  = '1';
+  bloomMsg.style.display  = 'flex';
+  bloomMsg.style.visibility = 'visible';
+
+  /* ── A. Build per-letter spans ── */
+  bloomMsg.innerHTML = '';
+  [...REVEAL_MSG].forEach(ch => {
+    const span = document.createElement('span');
+    span.className = 'bloom-letter';
+    span.textContent = ch === ' ' ? '\u00A0' : ch;
+    bloomMsg.appendChild(span);
+  });
+  const letters = bloomMsg.querySelectorAll('.bloom-letter');
+
+  /* ── H. Hint updates immediately ── */
+  scratchHint.textContent = '✦  Love never fails  ✦';
+  scratchHint.style.animation = 'none';
+  gsap.to(scratchHint, { opacity: 1, duration: .5 });
+
+  /* ── Master timeline ── */
+  const master = gsap.timeline();
+
+  /* A. Foil sweeps off */
+  master.to(scratchCanvas, {
+    opacity: 0, scale: 1.04,
+    duration: 0.7, ease: 'power2.inOut',
+    onComplete: () => { scratchCanvas.style.pointerEvents = 'none'; }
+  }, 0);
+
+  /* B. Section brightens to mark the moment */
+  const revealSection = document.getElementById('reveal-section');
+  master.to(revealSection, {
+    background: 'linear-gradient(to bottom, #f2ede4, #f8f2e0 20%, #f8f2e0 80%, #f2ede4)',
+    duration: 0.5, ease: 'power2.out'
+  }, 0.2);
+
+  /* C. Letters bloom in — grand stagger with spring ease */
+  master.fromTo(letters,
+    { opacity: 0, scale: 0.4, y: 24, rotation: -8 },
+    {
+      opacity: 1, scale: 1, y: 0, rotation: 0,
+      duration: 0.65,
+      ease: 'back.out(2.0)',
+      stagger: { each: 0.05, from: 'start' },
+    },
+    0.5
+  );
+
+  /* D. Message pulses once — the "grand announcement" beat */
+  master.to('#bloom-message', {
+    scale: 1.08,
+    duration: 0.22,
+    ease: 'power2.in',
+  }, 0.5 + letters.length * 0.05 + 0.15);
+  master.to('#bloom-message', {
+    scale: 1,
+    duration: 0.55,
+    ease: 'elastic.out(1.2, 0.4)',
+  });
+
+  /* E. First confetti wave (main burst) */
+  master.call(() => launchConfetti(1.0), null, 0.4);
+
+  /* F. Verse fades up */
+  master.to(revealVerse, {
+    opacity: 1, y: 0,
+    duration: 0.9, ease: 'power3.out',
+  }, 1.8);
+
+  /* G. Second smaller confetti wave */
+  master.call(() => launchConfetti(0.55), null, 2.2);
+
+  /* Scroll-nudge: gently bring the section fully into view */
+  setTimeout(() => {
+    revealSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, 600);
+}
+
+/* ── 5. CONFETTI PARTICLE SYSTEM ────────────────────────────────── */
+/*
+  Palette: sage green + gold + blush + cream
+  Each particle: position, velocity, rotation, rotVel, size, shape, color
+  Shapes: rect, oval, triangle
+  Physics: gravity + drag, 3.5s lifetime
+*/
+const CONFETTI_COLORS = [
+  '#d4af37', '#ffe060', '#f0cc60',  /* sun-golds */
+  '#c41450', '#e84070', '#f07090',  /* magentas & pinks */
+  '#0a8878', '#12c4a8', '#40e0c0',  /* jewel teals */
+  '#6040c0', '#8060e0', '#a080ff',  /* deep violets */
+  '#e84820', '#ff6040',             /* bright corals */
+  '#22a830', '#40c850',             /* emerald greens */
+  '#f7e8d0', '#ffffff',             /* cream & white glints */
+];
+const CONFETTI_COUNT = 120;
+let confettiParticles = [];
+let confettiAnimId    = null;
+
+function launchConfetti(intensity = 1.0){
+  confettiCanvas.width  = innerWidth;
+  confettiCanvas.height = innerHeight;
+
+  const wrapRect = scratchWrap.getBoundingClientRect();
+  const ox = wrapRect.left + wrapRect.width  / 2;
+  const oy = wrapRect.top  + wrapRect.height / 2;
+
+  const count = Math.round(160 * intensity);
+
+  const newParticles = Array.from({ length: count }, () => {
+    const angle = Math.random() * 2 * Math.PI;
+    const speed = (5 + Math.random() * 14) * intensity;
+    const size  = 5 + Math.random() * 10;
+    return {
+      x:     ox,
+      y:     oy,
+      vx:    Math.cos(angle) * speed * (0.5 + Math.random() * 0.9),
+      vy:    Math.sin(angle) * speed - Math.random() * 8 * intensity,
+      rot:   Math.random() * 360,
+      rotV:  (Math.random() - 0.5) * 10,
+      w:     size,
+      h:     size * (0.35 + Math.random() * 0.65),
+      color: CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)],
+      shape: ['rect','oval','triangle'][Math.floor(Math.random() * 3)],
+      alpha: 1,
+      born:  Date.now(),
+      life:  2600 + Math.random() * 1400,
+    };
+  });
+
+  confettiParticles = [...confettiParticles, ...newParticles];
+
+  if(confettiAnimId) cancelAnimationFrame(confettiAnimId);
+  animateConfetti();
+}
+
+function animateConfetti(){
+  confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+
+  const now     = Date.now();
+  const alive   = [];
+
+  confettiParticles.forEach(p => {
+    const age   = now - p.born;
+    if(age > p.life) return; /* expired */
+
+    const t     = age / p.life;  /* 0 → 1 */
+    p.x  += p.vx;
+    p.y  += p.vy;
+    p.vx *= 0.98;               /* air drag */
+    p.vy += 0.22;               /* gravity */
+    p.rot+= p.rotV;
+    p.alpha = t < 0.7 ? 1 : 1 - (t - 0.7) / 0.3; /* fade last 30% of life */
+
+    confettiCtx.save();
+    confettiCtx.globalAlpha = Math.max(0, p.alpha);
+    confettiCtx.translate(p.x, p.y);
+    confettiCtx.rotate(p.rot * Math.PI / 180);
+    confettiCtx.fillStyle = p.color;
+
+    if(p.shape === 'rect'){
+      confettiCtx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+    } else if(p.shape === 'oval'){
+      confettiCtx.beginPath();
+      confettiCtx.ellipse(0, 0, p.w/2, p.h/2, 0, 0, Math.PI*2);
+      confettiCtx.fill();
+    } else {
+      /* triangle */
+      confettiCtx.beginPath();
+      confettiCtx.moveTo(0, -p.h/2);
+      confettiCtx.lineTo( p.w/2,  p.h/2);
+      confettiCtx.lineTo(-p.w/2,  p.h/2);
+      confettiCtx.closePath();
+      confettiCtx.fill();
+    }
+    confettiCtx.restore();
+
+    alive.push(p);
+  });
+
+  confettiParticles = alive;
+
+  if(confettiParticles.length > 0){
+    confettiAnimId = requestAnimationFrame(animateConfetti);
+  } else {
+    confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+  }
+}
+
+/* ══════════════════════════════════════════════════
+   RSVP
+══════════════════════════════════════════════════ */
+document.getElementById('rsvp-submit').addEventListener('click',()=>{
+  const fname=document.getElementById('r-fname').value.trim();
+  const email=document.getElementById('r-email').value.trim();
+  const attend=document.getElementById('r-attend').value;
+  if(!fname||!email||!attend){
+    gsap.fromTo('#rsvp-form',{x:-6},{x:6,duration:.08,yoyo:true,repeat:5,ease:'none',clearProps:'x'});
+    return;
+  }
+  gsap.to('#rsvp-form',{opacity:0,y:-10,duration:.3,onComplete:()=>{
+    document.getElementById('rsvp-form').style.display='none';
+    document.getElementById('rsvp-success').style.display='block';
+    gsap.from('#rsvp-success',{opacity:0,y:12,duration:.5,ease:'power2.out'});
+  }});
+});
+</script>
+</body>
+</html>
